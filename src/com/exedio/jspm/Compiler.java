@@ -15,10 +15,13 @@ class Compiler
 	private static final int STATE_HTML = 0;
 	private static final int STATE_HTML_LESS = 1;
 	private static final int STATE_JAVA = 2;
-	private static final int STATE_JAVA_PERCENT = 3;
+	private static final int STATE_JAVA_FIRST = 3;
+	private static final int STATE_JAVA_PERCENT = 4;
 	
 	private static final String PRINT_PREFIX = "out.print(\"";
 	private static final String PRINT_SUFFIX = "\");\n";
+	private static final String PRINT_PREFIX_EXPRESSION = "out.print(";
+	private static final String PRINT_SUFFIX_EXPRESSION = ");\n";
 
 	Compiler(final String fileName) throws IOException
 	{
@@ -43,6 +46,7 @@ class Compiler
 			int state = STATE_HTML;
 			
 			char cback = '*';
+			boolean expression = true;
 			o.write(PRINT_PREFIX);
 			for(int ci = source.read(); ci>0; ci = source.read())
 			{
@@ -76,7 +80,8 @@ class Compiler
 					case STATE_HTML_LESS:
 						if(c=='%')
 						{
-							state = STATE_JAVA;
+							state = STATE_JAVA_FIRST;
+							expression = false;
 							o.write(PRINT_SUFFIX);
 						}
 						else
@@ -84,6 +89,24 @@ class Compiler
 							state = STATE_HTML;
 							o.write(cback);
 							o.write(c);
+						}
+						break;
+					case STATE_JAVA_FIRST:
+						switch(c)
+						{
+							case '%':
+								state = STATE_JAVA_PERCENT;
+								cback = c;
+								break;
+							case '=':
+								state = STATE_JAVA;
+								expression = true;
+								o.write(PRINT_PREFIX_EXPRESSION);
+								break;
+							default:
+								state = STATE_JAVA;
+								o.write(c);
+								break;
 						}
 						break;
 					case STATE_JAVA:
@@ -102,6 +125,8 @@ class Compiler
 						if(c=='>')
 						{
 							state = STATE_HTML;
+							if(expression)
+								o.write(PRINT_SUFFIX_EXPRESSION);
 							o.write(PRINT_PREFIX);
 						}
 						else
