@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 
@@ -44,17 +43,10 @@ class Compiler
 			source = new FileReader(sourceFile);
 			o = new FileWriter(targetFile);
 			
-			o.write(
-					"package com.exedio.jspm.test;\n\n" +
-					"class Test_Jspm\n" +
-					"{\n" +
-					"\tstatic final void writeIt(final "+PrintWriter.class.getName()+" out)\n" +
-					"\t{\n");
-			
 			int state = STATE_HTML;
 			char cback = '*';
 			boolean expression = true;
-			o.write(PRINT_PREFIX);
+			int htmlCharCount = 0;
 			for(int ci = source.read(); ci>0; ci = source.read())
 			{
 				final char c = (char)ci;
@@ -69,17 +61,25 @@ class Compiler
 								cback = c;
 								break;
 							case '"':
+								if((htmlCharCount++)==0)
+									o.write(PRINT_PREFIX);
 								o.write("\\\"");
 								break;
 							case '\t':
+								if((htmlCharCount++)==0)
+									o.write(PRINT_PREFIX);
 								o.write("\\t");
 								break;
 							case '\n':
+								if((htmlCharCount++)==0)
+									o.write(PRINT_PREFIX);
 								o.write("\\n");
 								break;
 							case '\r':
 								break;
 							default:
+								if((htmlCharCount++)==0)
+									o.write(PRINT_PREFIX);
 								o.write(c);
 								break;
 						}
@@ -89,11 +89,15 @@ class Compiler
 						{
 							state = STATE_JAVA_FIRST;
 							expression = false;
-							o.write(PRINT_SUFFIX);
+							if(htmlCharCount>0)
+								o.write(PRINT_SUFFIX);
+							htmlCharCount = 0;
 						}
 						else
 						{
 							state = STATE_HTML;
+							if((htmlCharCount++)==0)
+								o.write(PRINT_PREFIX);
 							o.write(cback);
 							o.write(c);
 						}
@@ -132,9 +136,9 @@ class Compiler
 						if(c=='>')
 						{
 							state = STATE_HTML;
+							htmlCharCount = 0;
 							if(expression)
 								o.write(PRINT_SUFFIX_EXPRESSION);
-							o.write(PRINT_PREFIX);
 						}
 						else
 						{
@@ -147,12 +151,8 @@ class Compiler
 						throw new RuntimeException(String.valueOf(state));
 				}
 			}
-			o.write(PRINT_SUFFIX);
-
-			o.write(
-					"\n" +
-					"\t}\n" +
-					"}\n");
+			if(htmlCharCount>0)
+				o.write(PRINT_SUFFIX);
 		}
 		finally
 		{

@@ -1,4 +1,10 @@
-<html>
+<%package com.exedio.jspm.test;
+
+class Test_Jspm
+{
+	static final void writeIt(final java.io.PrintWriter out)
+	{
+%><html>
 	<head>
 		<title><%=
 			"12345".substring(1, 4)
@@ -16,3 +22,5 @@
 	%>
 </html>
 
+<%}
+}%>
