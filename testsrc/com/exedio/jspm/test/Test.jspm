@@ -5,6 +5,13 @@
 		%></title>
 	</head><%
 		doSomeThing();
+		if(true)
+		{
+	%>
+	<body>
+		hello
+	</body><%
+	}
 	%>
 </html>
 
