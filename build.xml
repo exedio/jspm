@@ -28,10 +28,23 @@
 				deprecation="on"
 				debug="on"
 				optimize="off">
+			<classpath>
+				<pathelement location="../lib/junit.jar" />
+			</classpath>
 		</javac>
 	</target>
 	
-	<target name="test" depends="test.compile" />
+	<target name="test.run" depends="test.compile">
+		<java classname="junit.textui.TestRunner" taskname="junit" fork="yes" failonerror="yes">
+			<classpath>
+				<pathelement location="build/testclasses" />
+				<pathelement location="../lib/junit.jar" />
+			</classpath>
+			<arg value="com.exedio.jspm.test.PackageTest" />
+		</java>
+	</target>
+	
+	<target name="test" depends="test.run" />
 	
 	<target name="clean">
 		<delete dir="build" />
