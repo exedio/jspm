@@ -3,6 +3,8 @@
 		<title><%
 			makeTitle();
 		%></title>
-	</head>
+	</head><%
+		doSomeThing();
+	%>
 </html>
 
