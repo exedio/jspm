@@ -1,4 +1,5 @@
-<%package com.exedio.jspm.test;
+<%
+package com.exedio.jspm.test;
 
 import java.io.PrintWriter;
 
