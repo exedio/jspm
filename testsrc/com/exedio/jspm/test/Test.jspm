@@ -1,1 +1,8 @@
-hallo
+<html>
+	<head>
+		<title><%
+			makeTitle();
+		%></title>
+	</head>
+</html>
+

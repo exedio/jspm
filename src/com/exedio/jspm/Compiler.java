@@ -10,8 +10,15 @@ import java.io.Writer;
 
 class Compiler
 {
-	private static final int BUFLEN = 20000;
 	private static final String FILE_SUFFIX = ".jspm";
+	
+	private static final int STATE_HTML = 0;
+	private static final int STATE_HTML_LESS = 1;
+	private static final int STATE_JAVA = 2;
+	private static final int STATE_JAVA_PERCENT = 3;
+	
+	private static final String PRINT_PREFIX = "out.print(\"";
+	private static final String PRINT_SUFFIX = "\");\n";
 
 	Compiler(final String fileName) throws IOException
 	{
@@ -27,24 +34,95 @@ class Compiler
 		System.out.println("Compiling "+sourceFile+" to "+targetFileName);
 		
 		Reader source = null;
-		Writer target = null;
-		final char[] buf = new char[BUFLEN];
+		Writer o = null;
 		try
 		{
 			source = new FileReader(sourceFile);
-			target = new FileWriter(targetFile);
+			o = new FileWriter(targetFile);
 			
-			for(int len = source.read(buf); len>0; len = source.read(buf))
-				target.write(buf, 0, len);
+			int state = STATE_HTML;
 			
-			target.write("bello");
+			char cback = '*';
+			o.write(PRINT_PREFIX);
+			for(int ci = source.read(); ci>0; ci = source.read())
+			{
+				final char c = (char)ci;
+				
+				switch(state)
+				{
+					case STATE_HTML:
+						switch(c)
+						{
+							case '<':
+								state = STATE_HTML_LESS;
+								cback = c;
+								break;
+							case '"':
+								o.write("\\\"");
+								break;
+							case '\t':
+								o.write("\\t");
+								break;
+							case '\n':
+								o.write("\\n");
+								break;
+							case '\r':
+								break;
+							default:
+								o.write(c);
+								break;
+						}
+						break;
+					case STATE_HTML_LESS:
+						if(c=='%')
+						{
+							state = STATE_JAVA;
+							o.write(PRINT_SUFFIX);
+						}
+						else
+						{
+							state = STATE_HTML;
+							o.write(cback);
+							o.write(c);
+						}
+						break;
+					case STATE_JAVA:
+						switch(c)
+						{
+							case '%':
+								state = STATE_JAVA_PERCENT;
+								cback = c;
+								break;
+							default:
+								o.write(c);
+								break;
+						}
+						break;
+					case STATE_JAVA_PERCENT:
+						if(c=='>')
+						{
+							state = STATE_HTML;
+							o.write(PRINT_PREFIX);
+						}
+						else
+						{
+							state = STATE_JAVA;
+							o.write(cback);
+							o.write(c);
+						}
+						break;
+					default:
+						throw new RuntimeException(String.valueOf(state));
+				}
+			}
+			o.write(PRINT_SUFFIX);
 		}
 		finally
 		{
 			if(source!=null)
 				source.close();
-			if(target!=null)
-				target.close();
+			if(o!=null)
+				o.close();
 		}
 	}
 
