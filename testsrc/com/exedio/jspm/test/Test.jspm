@@ -4,11 +4,11 @@ import java.io.PrintWriter;
 
 class Test_Jspm
 {
-	static final void writeIt(final PrintWriter out, final boolean flag)
+	static final void writeIt(final PrintWriter out, final boolean flag, final String title)
 	{
 %><html>
 	<head>
-		<title><%="12345".substring(1, 4)%></title>
+		<title><%=title.substring(1, 4)%></title>
 	</head><%
 		if(flag)
 		{

@@ -40,14 +40,14 @@ public class WriteTest extends TestCase
 		{
 			final StringWriter buf = new StringWriter();
 			final PrintWriter print = new PrintWriter(buf);
-			Test_Jspm.writeIt(print, true);
+			Test_Jspm.writeIt(print, true, "12345");
 			print.flush();
 			assertEquals(EXPECTED_CONDITION_TRUE, buf.getBuffer().toString());
 		}
 		{
 			final StringWriter buf = new StringWriter();
 			final PrintWriter print = new PrintWriter(buf);
-			Test_Jspm.writeIt(print, false);
+			Test_Jspm.writeIt(print, false, "12345");
 			print.flush();
 			assertEquals(EXPECTED_CONDITION_FALSE, buf.getBuffer().toString());
 		}
