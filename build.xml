@@ -13,7 +13,7 @@
 	</target>
 	
 	<target name="test.jspm" depends="compile">
-		<java classname="com.exedio.jspm.Main" taskname="test" fork="yes" failonerror="yes">
+		<java classname="com.exedio.jspm.Main" taskname="jspm" fork="yes" failonerror="yes">
 			<classpath>
 				<pathelement location="build/classes" />
 			</classpath>
