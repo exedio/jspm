@@ -12,7 +12,7 @@
 		</javac>
 	</target>
 	
-	<target name="test" depends="">
+	<target name="test" depends="compile">
 		<java classname="com.exedio.jspm.Main" taskname="test" fork="yes" failonerror="yes">
 			<classpath>
 				<pathelement location="build/classes" />
