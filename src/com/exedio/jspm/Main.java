@@ -12,7 +12,9 @@ public class Main
 		{
 			for(int i = 0; i<args.length; i++)
 			{
-				new Compiler(args[i]);
+				final Compiler compiler = new Compiler(args[i]);
+				if(compiler.isDirty())
+					compiler.translate();
 			}
 		}
 		catch(IOException e)

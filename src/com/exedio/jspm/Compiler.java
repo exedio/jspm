@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
-class Compiler
+final class Compiler
 {
 	private static final String FILE_SUFFIX = ".jspm";
 	
@@ -23,9 +23,12 @@ class Compiler
 	private static final String PRINT_PREFIX_EXPRESSION = "out.print(";
 	private static final String PRINT_SUFFIX_EXPRESSION = ");\n";
 
-	Compiler(final String fileName) throws IOException
+	final File sourceFile;
+	final File targetFile;
+
+	Compiler(final String fileName)
 	{
-		final File sourceFile = new File(fileName);
+		this.sourceFile = new File(fileName);
 
 		final String targetFileName;
 		if(fileName.endsWith(FILE_SUFFIX))
@@ -33,9 +36,25 @@ class Compiler
 		else
 			targetFileName = fileName;
 
-		final File targetFile = new File(targetFileName);
-		System.out.println("Compiling "+sourceFile+" to "+targetFileName);
+		this.targetFile = new File(targetFileName);
+	}
+	
+	boolean isDirty()
+	{
+		final long target = targetFile.lastModified();
+		if(target==0l)
+			return true;
+
+		final long source = sourceFile.lastModified();
+		if(source==0l)
+			return true;
 		
+		return target<source;
+	}
+	
+	void translate() throws IOException
+	{
+		System.out.println("Translating "+sourceFile+" to "+targetFile);
 		Reader source = null;
 		Writer o = null;
 		try
