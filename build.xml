@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<project name="jspm" default="all" basedir=".">
+
+	<target name="compile">
+		<mkdir dir="build/classes" />
+		<javac srcdir="src"
+				destdir="build/classes"
+				deprecation="on"
+				debug="on"
+				optimize="off">
+		</javac>
+	</target>
+	
+	<target name="test" depends="">
+		<java classname="com.exedio.jspm.Main" taskname="test" fork="yes" failonerror="yes">
+			<classpath>
+				<pathelement location="build/classes" />
+			</classpath>
+			<arg value="testsrc/com/exedio/jspm/test/Test.jspm" />
+		</java>
+	</target>
+	
+	<target name="clean">
+		<delete dir="build" />
+	</target>
+
+	<target name="all" depends="compile, test" />
+
+</project>
