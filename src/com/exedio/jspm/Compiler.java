@@ -45,7 +45,7 @@ class Compiler
 			o = new FileWriter(targetFile);
 			
 			o.write(
-					"package com.exedio.jspm.test;\n" +
+					"package com.exedio.jspm.test;\n\n" +
 					"class Test_Jspm\n" +
 					"{\n" +
 					"\tstatic final void writeIt(final "+PrintWriter.class.getName()+" out)\n" +
