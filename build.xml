@@ -44,6 +44,10 @@
 		</java>
 	</target>
 	
+	<target name="jar" depends="compile">
+		<jar jarfile="build/exedio-jspm.jar" basedir="build/classes" />
+	</target>
+	
 	<target name="test" depends="test.run" />
 	
 	<target name="clean">
@@ -55,6 +59,6 @@
 		</delete>
 	</target>
 
-	<target name="all" depends="compile, test" />
+	<target name="all" depends="compile, jar, test" />
 
 </project>
