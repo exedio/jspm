@@ -1,14 +1,14 @@
 <%package com.exedio.jspm.test;
 
+import java.io.PrintWriter;
+
 class Test_Jspm
 {
-	static final void writeIt(final java.io.PrintWriter out)
+	static final void writeIt(final PrintWriter out)
 	{
 %><html>
 	<head>
-		<title><%=
-			"12345".substring(1, 4)
-		%></title>
+		<title><%="12345".substring(1, 4)%></title>
 	</head><%
 		if(true)
 		{
@@ -18,9 +18,11 @@ class Test_Jspm
 			out.print("zapp");
 			%>
 	</body><%
-	}
+		}
 	%>
 </html>
 
-<%}
-}%>
+<%
+	}
+}
+%>
