@@ -13,9 +13,9 @@ public class WriteTest extends TestCase
 		"<html>\n" +
 		"\t<head>\n" +
 		"\t\t<title>234</title>\n" +
-		"\t</head>zapp\n" +
+		"\t</head>\n" +
 		"\t<body>\n" +
-		"\t\thello\n" +
+		"\t\thello-zapp\n" +
 		"\t</body>\n" +
 		"</html>\n" +
 		"\n";

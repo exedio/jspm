@@ -4,12 +4,13 @@
 			"12345".substring(1, 4)
 		%></title>
 	</head><%
-		out.print("zapp");
 		if(true)
 		{
 	%>
 	<body>
-		hello
+		hello-<%
+			out.print("zapp");
+			%>
 	</body><%
 	}
 	%>
