@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 
@@ -43,8 +44,14 @@ class Compiler
 			source = new FileReader(sourceFile);
 			o = new FileWriter(targetFile);
 			
-			int state = STATE_HTML;
+			o.write(
+					"package com.exedio.jspm.test;\n" +
+					"class Test_Jspm\n" +
+					"{\n" +
+					"\tstatic final void writeIt(final "+PrintWriter.class.getName()+" out)\n" +
+					"\t{\n");
 			
+			int state = STATE_HTML;
 			char cback = '*';
 			boolean expression = true;
 			o.write(PRINT_PREFIX);
@@ -141,6 +148,11 @@ class Compiler
 				}
 			}
 			o.write(PRINT_SUFFIX);
+
+			o.write(
+					"\n" +
+					"\t}\n" +
+					"}\n");
 		}
 		finally
 		{
