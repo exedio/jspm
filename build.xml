@@ -35,6 +35,11 @@
 	
 	<target name="clean">
 		<delete dir="build" />
+		<delete>
+			<fileset dir="testsrc">
+				<include name="**/*_Jspm.java" />
+			</fileset>
+		</delete>
 	</target>
 
 	<target name="all" depends="compile, test" />
