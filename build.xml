@@ -65,6 +65,7 @@
 				compression="gzip">
 			<tarfileset dir="${basedir}">
 				<exclude name="build/**" />
+				<exclude name="**/*_Jspm.java" />
 			</tarfileset>
 		</tar>
 	</target>
