@@ -89,7 +89,7 @@
 		</delete>
 	</target>
 
-	<target name="all" depends="compile, jar, test, dist" />
+	<target name="all"               depends="compile, jar, test, dist" />
 	<target name="all.but.dist.test" depends="compile, jar, test, dist.tar" />
 
 </project>
