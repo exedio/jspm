@@ -29,7 +29,7 @@
 				debug="on"
 				optimize="off">
 			<classpath>
-				<pathelement location="../lib/junit.jar" />
+				<pathelement location="lib/junit.jar" />
 			</classpath>
 		</javac>
 	</target>
@@ -38,7 +38,7 @@
 		<java classname="junit.textui.TestRunner" taskname="junit" fork="yes" failonerror="yes">
 			<classpath>
 				<pathelement location="build/testclasses" />
-				<pathelement location="../lib/junit.jar" />
+				<pathelement location="lib/junit.jar" />
 			</classpath>
 			<arg value="com.exedio.jspm.test.PackageTest" />
 		</java>
@@ -59,6 +59,26 @@
 	
 	<target name="test" depends="test.run" />
 	
+	<target name="dist.tar">
+		<tar destfile="build/exedio-jspm-src.tar.gz"
+				compression="gzip">
+			<tarfileset dir="${basedir}">
+				<exclude name="build/**" />
+			</tarfileset>
+		</tar>
+	</target>
+	
+	<target name="dist.test" depends="dist.tar">
+		<delete dir="build/dist-test" />
+		<mkdir dir="build/dist-test" />
+		<untar src="build/exedio-jspm-src.tar.gz"
+				dest="build/dist-test"
+				compression="gzip" />
+		<ant dir="build/dist-test" target="all.but.dist.test" />
+	</target>
+	
+	<target name="dist" depends="dist.tar, dist.test" />
+	
 	<target name="clean">
 		<delete dir="build" />
 		<delete>
@@ -68,6 +88,7 @@
 		</delete>
 	</target>
 
-	<target name="all" depends="compile, jar, test" />
+	<target name="all" depends="compile, jar, test, dist" />
+	<target name="all.but.dist.test" depends="compile, jar, test, dist.tar" />
 
 </project>
