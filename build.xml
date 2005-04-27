@@ -60,6 +60,7 @@
 	<target name="test" depends="test.run" />
 	
 	<target name="dist.tar">
+		<mkdir dir="build" />
 		<tar destfile="build/exedio-jspm-src.tar.gz"
 				compression="gzip">
 			<tarfileset dir="${basedir}">
