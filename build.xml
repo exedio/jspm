@@ -12,13 +12,18 @@
 		</javac>
 	</target>
 	
-	<target name="test.jspm" depends="compile">
-		<java classname="com.exedio.jspm.Main" taskname="jspm" fork="yes" failonerror="yes">
+	<target name="taskdef" depends="compile">
+		<taskdef name="jspm" classname="com.exedio.jspm.AntTask">
 			<classpath>
 				<pathelement location="build/classes" />
 			</classpath>
-			<arg value="testsrc/com/exedio/jspm/test/Test.jspm" />
-		</java>
+		</taskdef>
+	</target>
+	
+	<target name="test.jspm" depends="taskdef">
+		<jspm>
+			<fileset dir="testsrc" includes="**/*.jspm" />
+		</jspm>
 	</target>
 	
 	<target name="test.compile" depends="test.jspm">

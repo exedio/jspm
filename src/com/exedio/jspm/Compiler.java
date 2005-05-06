@@ -56,6 +56,12 @@ final class Compiler
 		this.targetFile = new File(targetFileName);
 	}
 	
+	void translateIfDirty() throws IOException
+	{
+		if(isDirty())
+			translate();
+	}
+	
 	boolean isDirty()
 	{
 		final long target = targetFile.lastModified();
@@ -71,7 +77,7 @@ final class Compiler
 	
 	void translate() throws IOException
 	{
-		System.out.println("Translating "+sourceFile+" to "+targetFile);
+		System.out.println("Translating "+sourceFile);
 		Reader source = null;
 		Writer o = null;
 		try

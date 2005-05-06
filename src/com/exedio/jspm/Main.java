@@ -28,11 +28,7 @@ public class Main
 		try
 		{
 			for(int i = 0; i<args.length; i++)
-			{
-				final Compiler compiler = new Compiler(args[i]);
-				if(compiler.isDirty())
-					compiler.translate();
-			}
+				(new Compiler(args[i])).translateIfDirty();
 		}
 		catch(IOException e)
 		{
