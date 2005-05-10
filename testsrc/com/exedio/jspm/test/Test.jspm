@@ -46,6 +46,7 @@ class Test_Jspm
 	
 	static final void writeMock(final MockWriter out)
 	{
+		%><%
 		%>1<%
 		%>12<%
 		%>123<%
