@@ -5,4 +5,3 @@
 * encode non-ascii in string literals into html entities
 * pre-encode string literals into byte-arrays with a fixed character encoding
 * convert line breaks in string literals into customizable (platform dependent) line breaks
-* test more in detail with mock-PrintWriter
