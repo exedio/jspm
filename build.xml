@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="jspm" default="all" basedir=".">
+<project name="jspm" default="build" basedir=".">
 
 	<target name="compile">
 		<mkdir dir="build/classes" />
@@ -81,7 +81,7 @@
 		<untar src="build/exedio-jspm-src.tar.gz"
 				dest="build/dist-test"
 				compression="gzip" />
-		<ant dir="build/dist-test" target="all.but.dist.test" />
+		<ant dir="build/dist-test" target="build" />
 	</target>
 	
 	<target name="dist" depends="dist.tar, dist.test" />
@@ -95,7 +95,7 @@
 		</delete>
 	</target>
 
-	<target name="all"               depends="compile, jar, test, dist" />
-	<target name="all.but.dist.test" depends="compile, jar, test, dist.tar" />
+	<target name="build" depends="compile, jar, test" />
+	<target name="all" depends="build, dist" />
 
 </project>
