@@ -1,0 +1,6 @@
+* collapse empty scriptlets
+* split very long string literals
+* convert string literals of length one to character literals
+* split large (too large for JVM) classes into multiple inner classes
+* encode non-ascii in string literals into html entities
+* pre-encode string literals into byte-arrays with a fixed character encoding
