@@ -56,6 +56,8 @@ class Test_Jspm
 		%><%=i%><%
 		%>hallo
 bello<%
+		%>border="0"<%
+		%>tib	tab<%
 	}
 }
 %>

@@ -83,6 +83,8 @@ public class WriteTest extends TestCase
 		expected.add("zack");
 		expected.add(new Integer(55));
 		expected.add("hallo\nbello");
+		expected.add("border=\"0\"");
+		expected.add("tib\ttab");
 		assertEquals(expected, out.result);
 	}
 
