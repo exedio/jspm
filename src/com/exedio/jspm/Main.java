@@ -19,7 +19,6 @@
 package com.exedio.jspm;
 
 import java.io.IOException;
-Mach was kaputt, um CruiseControl zu testen
 
 
 public class Main
