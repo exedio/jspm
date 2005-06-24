@@ -13,11 +13,9 @@
 	</target>
 	
 	<target name="taskdef" depends="compile">
-		<taskdef name="jspm" classname="com.exedio.jspm.AntTask">
-			<classpath>
-				<pathelement location="build/classes" />
-			</classpath>
-		</taskdef>
+		<taskdef name="jspm"
+				classname="com.exedio.jspm.AntTask"
+				classpath="build/classes" />
 	</target>
 	
 	<target name="test.jspm" depends="taskdef">
