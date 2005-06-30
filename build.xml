@@ -24,6 +24,8 @@
 		</jspm>
 	</target>
 	
+	<target name="jspm" depends="test.jspm" />
+	
 	<target name="test.compile" depends="test.jspm">
 		<mkdir dir="build/testclasses" />
 		<javac srcdir="testsrc"
