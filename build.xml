@@ -53,10 +53,10 @@
 		<jar jarfile="build/exedio-jspm.jar" basedir="build/classes">
 			<manifest>
 				<attribute name="Specification-Title" value="exedio jspm"/>
-				<attribute name="Specification-Version" value="cruisecontrol ${label} ${cvstimestamp}"/>
+				<attribute name="Specification-Version" value="${build.tag}"/>
 				<attribute name="Specification-Vendor" value="exedio GmbH"/>
 				<attribute name="Implementation-Title" value="exedio jspm"/>
-				<attribute name="Implementation-Version" value="cruisecontrol ${label} ${cvstimestamp}"/> 
+				<attribute name="Implementation-Version" value="${build.tag}"/>
 				<attribute name="Implementation-Vendor" value="exedio GmbH"/>
 			</manifest>
 		</jar>
@@ -66,8 +66,7 @@
 	
 	<target name="dist.tar">
 		<mkdir dir="build" />
-		<echo file="build/build.number"
-				message="cruisecontrol ${label} ${cvstimestamp}" />
+		<echo file="build/build.number" message="${build.tag}" />
 		<tar destfile="build/exedio-jspm-src.tar.gz"
 				compression="gzip">
 			<tarfileset file="${basedir}/build/build.number" />
