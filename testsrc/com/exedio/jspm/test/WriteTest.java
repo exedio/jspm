@@ -85,6 +85,7 @@ public class WriteTest extends TestCase
 		expected.add("hallo\nbello");
 		expected.add("border=\"0\"");
 		expected.add("tib\ttab");
+		expected.add("back\\slash");
 		assertEquals(expected, out.result);
 	}
 

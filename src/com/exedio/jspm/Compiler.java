@@ -117,6 +117,11 @@ final class Compiler
 									o.write(PRINT_PREFIX);
 								o.write("\\n");
 								break;
+							case '\\':
+								if((htmlCharCount++)==0)
+									o.write(PRINT_PREFIX);
+								o.write("\\\\");
+								break;
 							case '\r':
 								break;
 							default:
