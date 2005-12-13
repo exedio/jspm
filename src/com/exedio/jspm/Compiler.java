@@ -39,6 +39,7 @@ final class Compiler
 	private static final String PRINT_SUFFIX = "\");\n";
 	private static final String PRINT_PREFIX_EXPRESSION = "out.print(";
 	private static final String PRINT_SUFFIX_EXPRESSION = ");\n";
+	private static final String PRINT_STRING_BREAK = "\" +\n\t\"";
 
 	final File sourceFile;
 	final File targetFile;
@@ -115,7 +116,7 @@ final class Compiler
 							case '\n':
 								if((htmlCharCount++)==0)
 									o.write(PRINT_PREFIX);
-								o.write("\\n");
+								o.write("\\n"+PRINT_STRING_BREAK);
 								break;
 							case '\\':
 								if((htmlCharCount++)==0)
