@@ -49,6 +49,8 @@
 		</java>
 	</target>
 	
+	<target name="test" depends="test.run" />
+	
 	<target name="jar" depends="compile">
 		<jar jarfile="build/exedio-jspm.jar" basedir="build/classes">
 			<manifest>
@@ -61,8 +63,6 @@
 			</manifest>
 		</jar>
 	</target>
-	
-	<target name="test" depends="test.run" />
 	
 	<target name="dist.tar">
 		<mkdir dir="build" />
