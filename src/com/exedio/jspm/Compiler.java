@@ -133,27 +133,27 @@ final class Compiler
 						}
 						break;
 					case STATE_HTML_LESS:
-						if(c=='%')
+						switch(c)
 						{
-							state = STATE_JAVA_FIRST;
-							expression = false;
-							if(htmlCharCount>0)
-								o.write(PRINT_SUFFIX);
-							htmlCharCount = 0;
-						}
-						else if(c=='<')
-						{
-							if((htmlCharCount++)==0)
-								o.write(PRINT_PREFIX);
-							o.write(cback);
-						}
-						else
-						{
-							state = STATE_HTML;
-							if((htmlCharCount++)==0)
-								o.write(PRINT_PREFIX);
-							o.write(cback);
-							o.write(c);
+							case '%':
+								state = STATE_JAVA_FIRST;
+								expression = false;
+								if(htmlCharCount>0)
+									o.write(PRINT_SUFFIX);
+								htmlCharCount = 0;
+								break;
+							case '<':
+								if((htmlCharCount++)==0)
+									o.write(PRINT_PREFIX);
+								o.write(cback);
+								break;
+							default:
+								state = STATE_HTML;
+								if((htmlCharCount++)==0)
+									o.write(PRINT_PREFIX);
+								o.write(cback);
+								o.write(c);
+								break;
 						}
 						break;
 					case STATE_JAVA_FIRST:
