@@ -141,6 +141,12 @@ final class Compiler
 								o.write(PRINT_SUFFIX);
 							htmlCharCount = 0;
 						}
+						else if(c=='<')
+						{
+							if((htmlCharCount++)==0)
+								o.write(PRINT_PREFIX);
+							o.write(cback);
+						}
 						else
 						{
 							state = STATE_HTML;
