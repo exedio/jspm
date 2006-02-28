@@ -100,4 +100,13 @@
 	<target name="build" depends="compile, jar, test" />
 	<target name="all" depends="build, dist" />
 
+	<target name="cruise" depends="all">
+		<delete dir="cruise" />
+		<mkdir dir="cruise" />
+		<copy todir="${basedir}/cruise">
+			<fileset file="${basedir}/build/exedio-jspm.jar" />
+			<fileset file="${basedir}/build/exedio-jspm-src.tar.gz" />
+		</copy>
+	</target>
+	
 </project>
