@@ -86,6 +86,8 @@ public class WriteTest extends TestCase
 		expected.add("border=\"0\"");
 		expected.add("tib\ttab");
 		expected.add("back\\slash");
+		//	TODO BUG!!
+		expected.add("<<%=\"in-tag\"%>>");
 		assertEquals(expected, out.result);
 	}
 
