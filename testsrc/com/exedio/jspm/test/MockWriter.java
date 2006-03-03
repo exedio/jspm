@@ -32,7 +32,7 @@ final class MockWriter
 
 	void print(final int i)
 	{
-		result.add(new Integer(i));
+		result.add(Integer.valueOf(i));
 	}
 
 }

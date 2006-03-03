@@ -81,7 +81,7 @@ public class WriteTest extends TestCase
 		expected.add("12");
 		expected.add("123");
 		expected.add("zack");
-		expected.add(new Integer(55));
+		expected.add(Integer.valueOf(55));
 		expected.add("hallo\nbello");
 		expected.add("border=\"0\"");
 		expected.add("tib\ttab");
