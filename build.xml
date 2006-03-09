@@ -72,6 +72,7 @@
 			<tarfileset file="${basedir}/build/build.number" />
 			<tarfileset dir="${basedir}">
 				<exclude name="build/**" />
+				<exclude name="cruise/**" />
 				<exclude name="**/*_Jspm.java" />
 			</tarfileset>
 		</tar>
