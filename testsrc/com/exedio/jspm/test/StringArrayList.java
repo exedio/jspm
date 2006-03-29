@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 final class StringArrayList extends ArrayList<String>
 {
+	private static final long serialVersionUID = 823465837265891l;
+	
 	StringArrayList()
 	{
 		super();

@@ -36,6 +36,7 @@
 			<classpath>
 				<pathelement location="lib/junit.jar" />
 			</classpath>
+			<compilerarg value="-Xlint" />
 		</javac>
 	</target>
 	

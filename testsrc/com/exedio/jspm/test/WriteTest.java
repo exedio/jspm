@@ -77,7 +77,7 @@ public class WriteTest extends TestCase
 		final MockWriter out = new MockWriter();
 		Test_Jspm.writeMock(out);
 		
-		final ArrayList expected = new ArrayList();
+		final ArrayList<Object> expected = new ArrayList<Object>();
 		expected.add("1");
 		expected.add("12");
 		expected.add("123");

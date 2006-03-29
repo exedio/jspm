@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 final class MockWriter
 {
-	final ArrayList result = new ArrayList();
+	final ArrayList<Object> result = new ArrayList<Object>();
 	
 	void print(final String s)
 	{
