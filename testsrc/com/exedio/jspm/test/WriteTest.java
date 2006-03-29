@@ -18,6 +18,7 @@
 
 package com.exedio.jspm.test;
 
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -93,6 +94,20 @@ public class WriteTest extends TestCase
 		expected.add("in-tag2");
 		expected.add(">");
 		assertEquals(expected, out.result);
+	}
+
+	// TODO remove, is a preparation for making cope attributes generic
+	public void testStringHashSet()
+	{
+		StringArrayList set = new StringArrayList();
+		set.add("uuuu");
+		//s.add(new Date());
+		String x = set.get(0);
+		assertEquals("uuuu", x);
+		String y = set.iterator().next();
+		assertEquals("uuuu", y);
+		set.add("xx");
+		assertEquals("uuuuxx", set.getConcat());
 	}
 
 }
