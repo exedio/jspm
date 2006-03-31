@@ -31,8 +31,8 @@ import org.apache.tools.ant.types.FileSet;
 
 public final class AntTask extends Touch
 {
-	private final ArrayList fileSets = new ArrayList();
-	private final ArrayList fileLists = new ArrayList();
+	private final ArrayList<FileSet>  fileSets  = new ArrayList<FileSet>();
+	private final ArrayList<FileList> fileLists = new ArrayList<FileList>();
 
 	public void addFileset(final FileSet fileSet)
 	{
