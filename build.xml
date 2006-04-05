@@ -41,13 +41,18 @@
 	</target>
 	
 	<target name="test.run" depends="test.compile">
-		<java classname="junit.textui.TestRunner" taskname="junit" fork="yes" failonerror="yes">
+		<mkdir dir="build/testresults" />
+		<junit fork="yes"
+				 haltonerror="true" haltonfailure="true"
+				 showoutput="true" printsummary="true">
+			<formatter type="brief" usefile="false" />
+			<formatter type="xml" />
 			<classpath>
 				<pathelement location="build/testclasses" />
-				<pathelement location="lib/junit.jar" />
 			</classpath>
-			<arg value="com.exedio.jspm.test.PackageTest" />
-		</java>
+			<test name="com.exedio.jspm.test.PackageTest" todir="build/testresults" outfile="jspm" />
+			<assertions><enable/></assertions>
+		</junit>
 	</target>
 	
 	<target name="test" depends="test.run" />
