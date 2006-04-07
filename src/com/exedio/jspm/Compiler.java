@@ -29,11 +29,14 @@ final class Compiler
 {
 	private static final String FILE_SUFFIX = ".jspm";
 	
-	private static final int STATE_HTML = 0;
-	private static final int STATE_HTML_LESS = 1;
-	private static final int STATE_JAVA = 2;
-	private static final int STATE_JAVA_FIRST = 3;
-	private static final int STATE_JAVA_PERCENT = 4;
+	static enum State
+	{
+		HTML,
+		HTML_LESS,
+		JAVA,
+		JAVA_FIRST,
+		JAVA_PERCENT;
+	}
 	
 	private static final String PRINT_PREFIX = "out.print(\"";
 	private static final String PRINT_SUFFIX = "\");\n";
@@ -86,7 +89,7 @@ final class Compiler
 			source = new FileReader(sourceFile);
 			o = new FileWriter(targetFile);
 			
-			int state = STATE_HTML;
+			State state = State.HTML;
 			char cback = '*';
 			boolean expression = true;
 			int htmlCharCount = 0;
@@ -96,11 +99,11 @@ final class Compiler
 				
 				switch(state)
 				{
-					case STATE_HTML:
+					case HTML:
 						switch(c)
 						{
 							case '<':
-								state = STATE_HTML_LESS;
+								state = State.HTML_LESS;
 								cback = c;
 								break;
 							case '"':
@@ -132,11 +135,11 @@ final class Compiler
 								break;
 						}
 						break;
-					case STATE_HTML_LESS:
+					case HTML_LESS:
 						switch(c)
 						{
 							case '%':
-								state = STATE_JAVA_FIRST;
+								state = State.JAVA_FIRST;
 								expression = false;
 								if(htmlCharCount>0)
 									o.write(PRINT_SUFFIX);
@@ -148,7 +151,7 @@ final class Compiler
 								o.write(cback);
 								break;
 							default:
-								state = STATE_HTML;
+								state = State.HTML;
 								if((htmlCharCount++)==0)
 									o.write(PRINT_PREFIX);
 								o.write(cback);
@@ -156,29 +159,29 @@ final class Compiler
 								break;
 						}
 						break;
-					case STATE_JAVA_FIRST:
+					case JAVA_FIRST:
 						switch(c)
 						{
 							case '%':
-								state = STATE_JAVA_PERCENT;
+								state = State.JAVA_PERCENT;
 								cback = c;
 								break;
 							case '=':
-								state = STATE_JAVA;
+								state = State.JAVA;
 								expression = true;
 								o.write(PRINT_PREFIX_EXPRESSION);
 								break;
 							default:
-								state = STATE_JAVA;
+								state = State.JAVA;
 								o.write(c);
 								break;
 						}
 						break;
-					case STATE_JAVA:
+					case JAVA:
 						switch(c)
 						{
 							case '%':
-								state = STATE_JAVA_PERCENT;
+								state = State.JAVA_PERCENT;
 								cback = c;
 								break;
 							default:
@@ -186,17 +189,17 @@ final class Compiler
 								break;
 						}
 						break;
-					case STATE_JAVA_PERCENT:
+					case JAVA_PERCENT:
 						if(c=='>')
 						{
-							state = STATE_HTML;
+							state = State.HTML;
 							htmlCharCount = 0;
 							if(expression)
 								o.write(PRINT_SUFFIX_EXPRESSION);
 						}
 						else
 						{
-							state = STATE_JAVA;
+							state = State.JAVA;
 							o.write(cback);
 							o.write(c);
 						}
