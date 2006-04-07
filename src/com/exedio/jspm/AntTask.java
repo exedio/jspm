@@ -21,7 +21,6 @@ package com.exedio.jspm;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -48,18 +47,16 @@ public final class AntTask extends Touch
 	{
 		try
 		{
-			for(final Iterator i = fileSets.iterator(); i.hasNext(); )
+			for(final FileSet fileSet : fileSets)
 			{
-				final FileSet fileSet = (FileSet)i.next();
 				final DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
 				final File dir = fileSet.getDir(getProject());
 				final String files[] = directoryScanner.getIncludedFiles();
 				for(int j = 0; j<files.length; j++)
 					(new Compiler((new File(dir, files[j])).getAbsolutePath())).translateIfDirty();
 			}
-			for(final Iterator i = fileLists.iterator(); i.hasNext(); )
+			for(final FileList fileList : fileLists)
 			{
-				final FileList fileList = (FileList)i.next();
 				final File dir = fileList.getDir(getProject());
 				final String files[] = fileList.getFiles(getProject());
 				for(int j = 0; j<files.length; j++)
