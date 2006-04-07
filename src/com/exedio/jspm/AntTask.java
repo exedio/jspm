@@ -59,8 +59,8 @@ public final class AntTask extends Touch
 			{
 				final File dir = fileList.getDir(getProject());
 				final String files[] = fileList.getFiles(getProject());
-				for(int j = 0; j<files.length; j++)
-					(new Compiler((new File(dir, files[j])).getAbsolutePath())).translateIfDirty();
+				for(String file : files)
+					(new Compiler((new File(dir, file)).getAbsolutePath())).translateIfDirty();
 			}
 		}
 		catch(IOException e)
