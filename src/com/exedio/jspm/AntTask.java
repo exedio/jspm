@@ -53,8 +53,8 @@ public final class AntTask extends Task
 				final DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
 				final File dir = fileSet.getDir(getProject());
 				final String files[] = directoryScanner.getIncludedFiles();
-				for(int j = 0; j<files.length; j++)
-					(new Compiler((new File(dir, files[j])).getAbsolutePath())).translateIfDirty();
+				for(String file : files)
+					(new Compiler((new File(dir, file)).getAbsolutePath())).translateIfDirty();
 			}
 			for(final FileList fileList : fileLists)
 			{
