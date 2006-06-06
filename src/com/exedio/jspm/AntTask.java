@@ -24,22 +24,20 @@ import java.util.ArrayList;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
-import org.apache.tools.ant.taskdefs.Touch;
+import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileList;
 import org.apache.tools.ant.types.FileSet;
 
-public final class AntTask extends Touch
+public final class AntTask extends Task
 {
 	private final ArrayList<FileSet>  fileSets  = new ArrayList<FileSet>();
 	private final ArrayList<FileList> fileLists = new ArrayList<FileList>();
 
-	@Override
 	public void addFileset(final FileSet fileSet)
 	{
 		fileSets.add(fileSet);
 	}
 
-	@Override
 	public void addFilelist(final FileList fileList)
 	{
 		fileLists.add(fileList);
