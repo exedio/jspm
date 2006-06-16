@@ -22,11 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DirectoryScanner;
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.types.FileList;
-import org.apache.tools.ant.types.FileSet;
+import org.hsqldb.lib.HsqlTimer.Task;
 
 public final class AntTask extends Task
 {
