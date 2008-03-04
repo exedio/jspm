@@ -32,6 +32,7 @@ public final class AntTask extends Task
 {
 	private final ArrayList<FileSet>  fileSets  = new ArrayList<FileSet>();
 	private final ArrayList<FileList> fileLists = new ArrayList<FileList>();
+	private String method = null;
 
 	public void addFileset(final FileSet fileSet)
 	{
@@ -41,6 +42,11 @@ public final class AntTask extends Task
 	public void addFilelist(final FileList fileList)
 	{
 		fileLists.add(fileList);
+	}
+	
+	public void setMethod(final String method)
+	{
+		this.method = method;
 	}
 
 	@Override
@@ -54,14 +60,14 @@ public final class AntTask extends Task
 				final File dir = fileSet.getDir(getProject());
 				final String files[] = directoryScanner.getIncludedFiles();
 				for(String file : files)
-					(new Compiler((new File(dir, file)).getAbsolutePath())).translateIfDirty();
+					(new Compiler((new File(dir, file)).getAbsolutePath(), method)).translateIfDirty();
 			}
 			for(final FileList fileList : fileLists)
 			{
 				final File dir = fileList.getDir(getProject());
 				final String files[] = fileList.getFiles(getProject());
 				for(String file : files)
-					(new Compiler((new File(dir, file)).getAbsolutePath())).translateIfDirty();
+					(new Compiler((new File(dir, file)).getAbsolutePath(), method)).translateIfDirty();
 			}
 		}
 		catch(IOException e)

@@ -38,16 +38,15 @@ final class Compiler
 		JAVA_PERCENT;
 	}
 	
-	private static final String PRINT_PREFIX = "out.print(\"";
 	private static final String PRINT_SUFFIX = "\");\n";
-	private static final String PRINT_PREFIX_EXPRESSION = "out.print(";
 	private static final String PRINT_SUFFIX_EXPRESSION = ");\n";
 	private static final String PRINT_STRING_BREAK = "\" +\n\t\"";
 
 	final File sourceFile;
 	final File targetFile;
+	private final String method;
 
-	Compiler(final String fileName)
+	Compiler(final String fileName, final String method)
 	{
 		this.sourceFile = new File(fileName);
 
@@ -58,6 +57,7 @@ final class Compiler
 			targetFileName = fileName;
 
 		this.targetFile = new File(targetFileName);
+		this.method = method;
 	}
 	
 	void translateIfDirty() throws IOException
@@ -82,6 +82,9 @@ final class Compiler
 	void translate() throws IOException
 	{
 		System.out.println("Translating "+sourceFile);
+		final String method = this.method!=null ? this.method : "print";
+		final String PRINT_PREFIX = "out." + method + "(\"";
+		final String PRINT_PREFIX_EXPRESSION = "out." + method + '(';
 		Reader source = null;
 		Writer o = null;
 		try
