@@ -51,6 +51,7 @@
 			<formatter type="xml" />
 			<classpath>
 				<pathelement location="build/testclasses" />
+				<pathelement location="lib/junit.jar" />
 			</classpath>
 			<test name="com.exedio.jspm.test.PackageTest" todir="build/testresults" outfile="jspm" />
 			<assertions><enable/></assertions>
