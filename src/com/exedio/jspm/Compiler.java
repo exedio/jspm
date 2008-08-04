@@ -38,9 +38,9 @@ final class Compiler
 		JAVA_PERCENT;
 	}
 	
-	private static final String PRINT_SUFFIX = "\");\n";
-	private static final String PRINT_SUFFIX_EXPRESSION = ");\n";
-	private static final String PRINT_STRING_BREAK = "\" +\n\t\"";
+	private static final String METHOD_SUFFIX = "\");\n";
+	private static final String METHOD_SUFFIX_EXPRESSION = ");\n";
+	private static final String METHOD_STRING_BREAK = "\" +\n\t\"";
 
 	final File sourceFile;
 	final File targetFile;
@@ -83,8 +83,8 @@ final class Compiler
 	{
 		System.out.println("Translating "+sourceFile);
 		final String method = this.method!=null ? this.method : "append";
-		final String PRINT_PREFIX = "out." + method + "(\"";
-		final String PRINT_PREFIX_EXPRESSION = "out." + method + '(';
+		final String METHOD_PREFIX = "out." + method + "(\"";
+		final String METHOD_PREFIX_EXPRESSION = "out." + method + '(';
 		Reader source = null;
 		Writer o = null;
 		try
@@ -111,29 +111,29 @@ final class Compiler
 								break;
 							case '"':
 								if((htmlCharCount++)==0)
-									o.write(PRINT_PREFIX);
+									o.write(METHOD_PREFIX);
 								o.write("\\\"");
 								break;
 							case '\t':
 								if((htmlCharCount++)==0)
-									o.write(PRINT_PREFIX);
+									o.write(METHOD_PREFIX);
 								o.write("\\t");
 								break;
 							case '\n':
 								if((htmlCharCount++)==0)
-									o.write(PRINT_PREFIX);
-								o.write("\\n"+PRINT_STRING_BREAK);
+									o.write(METHOD_PREFIX);
+								o.write("\\n"+METHOD_STRING_BREAK);
 								break;
 							case '\\':
 								if((htmlCharCount++)==0)
-									o.write(PRINT_PREFIX);
+									o.write(METHOD_PREFIX);
 								o.write("\\\\");
 								break;
 							case '\r':
 								break;
 							default:
 								if((htmlCharCount++)==0)
-									o.write(PRINT_PREFIX);
+									o.write(METHOD_PREFIX);
 								o.write(c);
 								break;
 						}
@@ -145,18 +145,18 @@ final class Compiler
 								state = State.JAVA_FIRST;
 								expression = false;
 								if(htmlCharCount>0)
-									o.write(PRINT_SUFFIX);
+									o.write(METHOD_SUFFIX);
 								htmlCharCount = 0;
 								break;
 							case '<':
 								if((htmlCharCount++)==0)
-									o.write(PRINT_PREFIX);
+									o.write(METHOD_PREFIX);
 								o.write(cback);
 								break;
 							default:
 								state = State.HTML;
 								if((htmlCharCount++)==0)
-									o.write(PRINT_PREFIX);
+									o.write(METHOD_PREFIX);
 								o.write(cback);
 								o.write(c);
 								break;
@@ -172,7 +172,7 @@ final class Compiler
 							case '=':
 								state = State.JAVA;
 								expression = true;
-								o.write(PRINT_PREFIX_EXPRESSION);
+								o.write(METHOD_PREFIX_EXPRESSION);
 								break;
 							default:
 								state = State.JAVA;
@@ -198,7 +198,7 @@ final class Compiler
 							state = State.HTML;
 							htmlCharCount = 0;
 							if(expression)
-								o.write(PRINT_SUFFIX_EXPRESSION);
+								o.write(METHOD_SUFFIX_EXPRESSION);
 						}
 						else
 						{
@@ -212,7 +212,7 @@ final class Compiler
 				}
 			}
 			if(htmlCharCount>0)
-				o.write(PRINT_SUFFIX);
+				o.write(METHOD_SUFFIX);
 		}
 		finally
 		{
