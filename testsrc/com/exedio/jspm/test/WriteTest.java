@@ -18,13 +18,11 @@
 
 package com.exedio.jspm.test;
 
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
-
 
 public class WriteTest extends TestCase
 {
@@ -95,5 +93,4 @@ public class WriteTest extends TestCase
 		expected.add(">");
 		assertEquals(expected, out.result);
 	}
-
 }

@@ -222,5 +222,4 @@ final class Compiler
 				o.close();
 		}
 	}
-
 }

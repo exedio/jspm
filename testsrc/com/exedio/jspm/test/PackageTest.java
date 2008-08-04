@@ -24,12 +24,10 @@ import junit.framework.TestSuite;
 
 public class PackageTest extends TestCase
 {
-
 	public static Test suite()
 	{
 		final TestSuite suite = new TestSuite();
 		suite.addTestSuite(WriteTest.class);
 		return suite;
 	}
-
 }

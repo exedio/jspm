@@ -20,7 +20,6 @@ package com.exedio.jspm;
 
 import java.io.IOException;
 
-
 public class Main
 {
 	public static final void main(final String[] args)
@@ -36,5 +35,4 @@ public class Main
 			System.exit(1);
 		}
 	}
-	
 }

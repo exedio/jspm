@@ -20,7 +20,6 @@ package com.exedio.jspm.test;
 
 import java.util.ArrayList;
 
-
 final class MockWriter
 {
 	final ArrayList<Object> result = new ArrayList<Object>();
@@ -34,5 +33,4 @@ final class MockWriter
 	{
 		result.add(Integer.valueOf(i));
 	}
-
 }
