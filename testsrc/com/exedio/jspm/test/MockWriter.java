@@ -25,12 +25,12 @@ final class MockWriter
 {
 	final ArrayList<Object> result = new ArrayList<Object>();
 	
-	void print(final String s)
+	void append(final String s)
 	{
 		result.add(s);
 	}
 
-	void print(final int i)
+	void append(final int i)
 	{
 		result.add(Integer.valueOf(i));
 	}
