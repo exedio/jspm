@@ -57,7 +57,7 @@ final class Compiler
 			targetFileName = fileName;
 
 		this.targetFile = new File(targetFileName);
-		this.method = method;
+		this.method = method!=null ? method : "append";
 	}
 	
 	void translateIfDirty() throws IOException
@@ -82,7 +82,7 @@ final class Compiler
 	void translate() throws IOException
 	{
 		System.out.println("Translating "+sourceFile);
-		final String method = this.method!=null ? this.method : "append";
+		final String method = this.method;
 		final String METHOD_PREFIX = "out." + method + "(\"";
 		final String METHOD_PREFIX_EXPRESSION = "out." + method + '(';
 		Reader source = null;
