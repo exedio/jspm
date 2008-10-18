@@ -109,6 +109,7 @@
 		</delete>
 	</target>
 
+	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
 	<target name="build" depends="compile, jar, test" />
 	<target name="all" depends="build, dist" />
 
