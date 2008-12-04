@@ -1,3 +1,6 @@
+
+TODO for jspm
+
 * collapse empty scriptlets
 * split very long string literals
 * convert string literals of length one to character literals
