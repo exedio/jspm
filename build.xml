@@ -11,6 +11,8 @@
 				deprecation="on"
 				debug="on"
 				optimize="off">
+			<compilerarg value="-encoding" />
+			<compilerarg value="ascii" />
 		</javac>
 	</target>
 	
@@ -39,6 +41,8 @@
 				<pathelement location="lib/junit.jar" />
 			</classpath>
 			<compilerarg value="-Xlint" />
+			<compilerarg value="-encoding" />
+			<compilerarg value="ascii" />
 		</javac>
 	</target>
 	
