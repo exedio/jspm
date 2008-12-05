@@ -118,6 +118,7 @@
 			<fileset file="${basedir}/build/exedio-jspm.jar" />
 			<fileset file="${basedir}/build/exedio-jspm-src-${build.file.tag}.tar.gz" />
 		</copy>
+		<copy file="CHANGELOG" tofile="${basedir}/cruise/exedio-jspm.jar-CHANGELOG" />
 	</target>
 	
 </project>
