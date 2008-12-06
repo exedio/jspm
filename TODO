@@ -5,7 +5,7 @@ TODO for jspm
 * split very long string literals
 * convert string literals of length one to character literals
 * split large (too large for JVM) classes into multiple inner classes
-* encode non-ascii in string literals into html entities
+* encode non-ascii in string literals into \uxxxx
 * pre-encode string literals into byte-arrays with a fixed character encoding
 * convert line breaks in string literals into customizable (platform dependent) line breaks
 * implement jsp-like comments: <%-- comment --%>
