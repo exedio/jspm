@@ -106,6 +106,7 @@
 	
 	<target name="clean">
 		<delete dir="build" />
+		<delete dir="cruise" />
 		<delete>
 			<fileset dir="testsrc">
 				<include name="**/*_Jspm.java" />
