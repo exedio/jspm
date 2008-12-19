@@ -1,3 +1,5 @@
 
 CHANGELOG for jspm
 
+* support for
+	<taskdef resource="com/exedio/jspm/ant.properties" classpath="lib/exedio-jspm.jar" />
