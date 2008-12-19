@@ -14,11 +14,12 @@
 			<compilerarg value="-encoding" />
 			<compilerarg value="ascii" />
 		</javac>
+		<copy file="src/com/exedio/jspm/ant.properties" todir="build/classes/com/exedio/jspm" />
 	</target>
 	
 	<target name="taskdef" depends="compile">
-		<taskdef name="jspm"
-				classname="com.exedio.jspm.AntTask"
+		<taskdef
+				resource="com/exedio/jspm/ant.properties"
 				classpath="build/classes" />
 	</target>
 	
