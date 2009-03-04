@@ -66,7 +66,7 @@
 	<target name="test" depends="test.run" />
 	
 	<target name="jar" depends="compile">
-		<jar jarfile="build/exedio-jspm.jar" basedir="build/classes" duplicate="fail">
+		<jar jarfile="build/exedio-jspm.jar" basedir="build/classes" filesonly="true" duplicate="fail" level="9">
 			<manifest>
 				<attribute name="Specification-Title" value="exedio jspm"/>
 				<attribute name="Specification-Version" value="${build.tag}"/>
