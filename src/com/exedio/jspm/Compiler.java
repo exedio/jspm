@@ -82,8 +82,8 @@ final class Compiler
 	void translate() throws IOException
 	{
 		System.out.println("Translating " + sourceFile);
-		final String methodPrefixStatic = "out." + method + "(\"";
-		final String methodPrefixExpression = "out." + method + '(';
+		final String prefixStatic     = "out." + method + "(\"";
+		final String prefixExpression = "out." + method + '(';
 		Reader source = null;
 		Writer o = null;
 		try
@@ -110,29 +110,29 @@ final class Compiler
 								break;
 							case '"':
 								if((htmlCharCount++)==0)
-									o.write(methodPrefixStatic);
+									o.write(prefixStatic);
 								o.write("\\\"");
 								break;
 							case '\t':
 								if((htmlCharCount++)==0)
-									o.write(methodPrefixStatic);
+									o.write(prefixStatic);
 								o.write("\\t");
 								break;
 							case '\n':
 								if((htmlCharCount++)==0)
-									o.write(methodPrefixStatic);
+									o.write(prefixStatic);
 								o.write("\\n"+METHOD_STRING_BREAK);
 								break;
 							case '\\':
 								if((htmlCharCount++)==0)
-									o.write(methodPrefixStatic);
+									o.write(prefixStatic);
 								o.write("\\\\");
 								break;
 							case '\r':
 								break;
 							default:
 								if((htmlCharCount++)==0)
-									o.write(methodPrefixStatic);
+									o.write(prefixStatic);
 								o.write(c);
 								break;
 						}
@@ -149,13 +149,13 @@ final class Compiler
 								break;
 							case '<':
 								if((htmlCharCount++)==0)
-									o.write(methodPrefixStatic);
+									o.write(prefixStatic);
 								o.write(cback);
 								break;
 							default:
 								state = State.HTML;
 								if((htmlCharCount++)==0)
-									o.write(methodPrefixStatic);
+									o.write(prefixStatic);
 								o.write(cback);
 								o.write(c);
 								break;
@@ -171,7 +171,7 @@ final class Compiler
 							case '=':
 								state = State.JAVA;
 								expression = true;
-								o.write(methodPrefixExpression);
+								o.write(prefixExpression);
 								break;
 							default:
 								state = State.JAVA;
