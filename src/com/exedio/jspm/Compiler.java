@@ -81,7 +81,7 @@ final class Compiler
 	
 	void translate() throws IOException
 	{
-		System.out.println("Translating "+sourceFile);
+		System.out.println("Translating " + sourceFile);
 		final String METHOD_PREFIX = "out." + method + "(\"";
 		final String METHOD_PREFIX_EXPRESSION = "out." + method + '(';
 		Reader source = null;
