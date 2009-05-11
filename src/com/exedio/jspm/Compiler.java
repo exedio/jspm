@@ -44,9 +44,10 @@ final class Compiler
 
 	final File sourceFile;
 	final File targetFile;
-	private final String method;
+	private final String methodStatic;
+	private final String methodExpression;
 
-	Compiler(final String fileName, final String method)
+	Compiler(final String fileName, final String methodStatic, final String methodExpression)
 	{
 		this.sourceFile = new File(fileName);
 
@@ -57,7 +58,8 @@ final class Compiler
 			targetFileName = fileName;
 
 		this.targetFile = new File(targetFileName);
-		this.method = method!=null ? method : "append";
+		this.methodStatic     = methodStatic    !=null ? methodStatic     : "append";
+		this.methodExpression = methodExpression!=null ? methodExpression : "append";
 	}
 	
 	void translateIfDirty() throws IOException
@@ -82,8 +84,8 @@ final class Compiler
 	void translate() throws IOException
 	{
 		System.out.println("Translating " + sourceFile);
-		final String prefixStatic     = "out." + method + "(\"";
-		final String prefixExpression = "out." + method + '(';
+		final String prefixStatic     = "out." + methodStatic     + "(\"";
+		final String prefixExpression = "out." + methodExpression + '(';
 		Reader source = null;
 		Writer o = null;
 		try

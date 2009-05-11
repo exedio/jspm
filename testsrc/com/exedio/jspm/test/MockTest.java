@@ -30,21 +30,21 @@ public class MockTest extends TestCase
 		Mock_Jspm.writeMock(out);
 		
 		final ArrayList<Object> expected = new ArrayList<Object>();
-		expected.add("1");
-		expected.add("12");
-		expected.add("123");
-		expected.add("zack");
+		expected.add("{1}");
+		expected.add("{12}");
+		expected.add("{123}");
+		expected.add("[zack]");
 		expected.add(Integer.valueOf(55));
-		expected.add("hallo\nbello");
-		expected.add("border=\"0\"");
-		expected.add("tib\ttab");
-		expected.add("back\\slash");
-		expected.add("<");
-		expected.add("in-tag");
-		expected.add(">");
-		expected.add("<zack><");
-		expected.add("in-tag2");
-		expected.add(">");
+		expected.add("{hallo\nbello}");
+		expected.add("{border=\"0\"}");
+		expected.add("{tib\ttab}");
+		expected.add("{back\\slash}");
+		expected.add("{<}");
+		expected.add("[in-tag]");
+		expected.add("{>}");
+		expected.add("{<zack><}");
+		expected.add("[in-tag2]");
+		expected.add("{>}");
 		assertEquals(expected, out.result);
 	}
 }

@@ -25,7 +25,10 @@
 	
 	<target name="test.jspm" depends="taskdef">
 		<jspm>
-			<fileset dir="testsrc" includes="**/*.jspm" />
+			<fileset dir="testsrc" includes="com/exedio/jspm/test/Test.jspm" />
+		</jspm>
+		<jspm staticMethod="appendStatic" expressionMethod="appendExpression">
+			<fileset dir="testsrc" includes="com/exedio/jspm/test/Mock.jspm" />
 		</jspm>
 	</target>
 	
