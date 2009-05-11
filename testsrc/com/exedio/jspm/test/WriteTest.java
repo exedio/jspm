@@ -20,7 +20,6 @@ package com.exedio.jspm.test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
@@ -68,29 +67,5 @@ public class WriteTest extends TestCase
 			print.flush();
 			assertEquals(EXPECTED_CONDITION_FALSE, buf.getBuffer().toString());
 		}
-	}
-	
-	public void testMock()
-	{
-		final MockOut out = new MockOut();
-		Mock_Jspm.writeMock(out);
-		
-		final ArrayList<Object> expected = new ArrayList<Object>();
-		expected.add("1");
-		expected.add("12");
-		expected.add("123");
-		expected.add("zack");
-		expected.add(Integer.valueOf(55));
-		expected.add("hallo\nbello");
-		expected.add("border=\"0\"");
-		expected.add("tib\ttab");
-		expected.add("back\\slash");
-		expected.add("<");
-		expected.add("in-tag");
-		expected.add(">");
-		expected.add("<zack><");
-		expected.add("in-tag2");
-		expected.add(">");
-		assertEquals(expected, out.result);
 	}
 }

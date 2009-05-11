@@ -18,17 +18,33 @@
 
 package com.exedio.jspm.test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.ArrayList;
 
-public class PackageTest extends TestCase
+import junit.framework.TestCase;
+
+public class MockTest extends TestCase
 {
-	public static Test suite()
+	public void testMock()
 	{
-		final TestSuite suite = new TestSuite();
-		suite.addTestSuite(WriteTest.class);
-		suite.addTestSuite(MockTest.class);
-		return suite;
+		final MockOut out = new MockOut();
+		Mock_Jspm.writeMock(out);
+		
+		final ArrayList<Object> expected = new ArrayList<Object>();
+		expected.add("1");
+		expected.add("12");
+		expected.add("123");
+		expected.add("zack");
+		expected.add(Integer.valueOf(55));
+		expected.add("hallo\nbello");
+		expected.add("border=\"0\"");
+		expected.add("tib\ttab");
+		expected.add("back\\slash");
+		expected.add("<");
+		expected.add("in-tag");
+		expected.add(">");
+		expected.add("<zack><");
+		expected.add("in-tag2");
+		expected.add(">");
+		assertEquals(expected, out.result);
 	}
 }
