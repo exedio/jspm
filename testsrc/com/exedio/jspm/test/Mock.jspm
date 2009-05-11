@@ -19,29 +19,25 @@
 
 package com.exedio.jspm.test;
 
-import java.io.PrintWriter;
-
-class Test_Jspm
+class Mock_Jspm
 {
-	static final void writeIt(final PrintWriter out, final boolean flag, final String title)
+	static final void writeMock(final MockOut out)
 	{
-%><html>
-	<head>
-		<title><%=title.substring(1, 4)%></title>
-	</head><%
-		if(flag)
-		{
-	%>
-	<body>
-		hello-<%
-			out.print("zapp");
-			%>
-	</body><%
-		}
-	%>
-</html>
-
-<%
+		%><%
+		%>1<%
+		%>12<%
+		%>123<%
+		final String s = "zack";
+		%><%=s%><%
+		final int i = 55;
+		%><%=i%><%
+		%>hallo
+bello<%
+		%>border="0"<%
+		%>tib	tab<%
+		%>back\slash<%
+		%><<%="in-tag"%>><%
+		%><zack><<%="in-tag2"%>><%
 	}
 }
 %>

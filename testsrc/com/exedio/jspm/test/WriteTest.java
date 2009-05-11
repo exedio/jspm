@@ -73,7 +73,7 @@ public class WriteTest extends TestCase
 	public void testMock()
 	{
 		final MockOut out = new MockOut();
-		Test_Jspm.writeMock(out);
+		Mock_Jspm.writeMock(out);
 		
 		final ArrayList<Object> expected = new ArrayList<Object>();
 		expected.add("1");
