@@ -20,7 +20,7 @@ package com.exedio.jspm.test;
 
 import java.util.ArrayList;
 
-final class MockWriter
+final class MockOut
 {
 	final ArrayList<Object> result = new ArrayList<Object>();
 	

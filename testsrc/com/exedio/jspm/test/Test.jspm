@@ -44,7 +44,7 @@ class Test_Jspm
 <%
 	}
 	
-	static final void writeMock(final MockWriter out)
+	static final void writeMock(final MockOut out)
 	{
 		%><%
 		%>1<%
