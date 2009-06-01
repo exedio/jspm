@@ -44,10 +44,9 @@ final class Compiler
 
 	final File sourceFile;
 	final File targetFile;
-	private final String methodStatic;
-	private final String methodExpression;
+	private final Config config;
 
-	Compiler(final String fileName, final String methodStatic, final String methodExpression)
+	Compiler(final String fileName, final Config config)
 	{
 		this.sourceFile = new File(fileName);
 
@@ -58,8 +57,10 @@ final class Compiler
 			targetFileName = fileName;
 
 		this.targetFile = new File(targetFileName);
-		this.methodStatic     = methodStatic    !=null ? methodStatic     : "append";
-		this.methodExpression = methodExpression!=null ? methodExpression : "append";
+		
+		if(config==null)
+			throw new NullPointerException("config");
+		this.config = config;
 	}
 	
 	void translateIfDirty() throws IOException
@@ -84,8 +85,8 @@ final class Compiler
 	void translate() throws IOException
 	{
 		System.out.println("Translating " + sourceFile);
-		final String prefixStatic     = "out." + methodStatic     + "(\"";
-		final String prefixExpression = "out." + methodExpression + '(';
+		final String prefixStatic     = "out." + config.getMethodStatic()     + "(\"";
+		final String prefixExpression = "out." + config.getMethodExpression() + '(';
 		Reader source = null;
 		Writer o = null;
 		try

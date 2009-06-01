@@ -32,8 +32,7 @@ public final class AntTask extends Task
 {
 	private final ArrayList<FileSet>  fileSets  = new ArrayList<FileSet>();
 	private final ArrayList<FileList> fileLists = new ArrayList<FileList>();
-	private String staticMethod = null;
-	private String expressionMethod = null;
+	private final Config config = new Config();
 
 	public void addFileset(final FileSet fileSet)
 	{
@@ -47,18 +46,17 @@ public final class AntTask extends Task
 	
 	public void setMethod(final String method)
 	{
-		this.    staticMethod = method;
-		this.expressionMethod = method;
+		config.setMethod(method);
 	}
 	
 	public void setStaticMethod(final String staticMethod)
 	{
-		this.staticMethod = staticMethod;
+		config.setStaticMethod(staticMethod);
 	}
 	
 	public void setExpressionMethod(final String expressionMethod)
 	{
-		this.expressionMethod = expressionMethod;
+		config.setExpressionMethod(expressionMethod);
 	}
 
 	@Override
@@ -72,14 +70,14 @@ public final class AntTask extends Task
 				final File dir = fileSet.getDir(getProject());
 				final String files[] = directoryScanner.getIncludedFiles();
 				for(String file : files)
-					(new Compiler((new File(dir, file)).getAbsolutePath(), staticMethod, expressionMethod)).translateIfDirty();
+					(new Compiler((new File(dir, file)).getAbsolutePath(), config)).translateIfDirty();
 			}
 			for(final FileList fileList : fileLists)
 			{
 				final File dir = fileList.getDir(getProject());
 				final String files[] = fileList.getFiles(getProject());
 				for(String file : files)
-					(new Compiler((new File(dir, file)).getAbsolutePath(), staticMethod, expressionMethod)).translateIfDirty();
+					(new Compiler((new File(dir, file)).getAbsolutePath(), config)).translateIfDirty();
 			}
 		}
 		catch(IOException e)

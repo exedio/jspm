@@ -27,7 +27,7 @@ public class Main
 		try
 		{
 			for(int i = 0; i<args.length; i++)
-				(new Compiler(args[i], null, null)).translateIfDirty();
+				(new Compiler(args[i], new Config())).translateIfDirty();
 		}
 		catch(IOException e)
 		{
