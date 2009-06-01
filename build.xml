@@ -8,13 +8,23 @@
 		<mkdir dir="build/classes" />
 		<javac srcdir="src"
 				destdir="build/classes"
+				includeAntRuntime="false"
 				deprecation="on"
 				debug="on"
 				optimize="off">
 			<compilerarg value="-encoding" />
 			<compilerarg value="ascii" />
 		</javac>
-		<copy file="src/com/exedio/jspm/ant.properties" todir="build/classes/com/exedio/jspm" />
+		<javac srcdir="antsrc"
+				destdir="build/classes"
+				includeAntRuntime="true"
+				deprecation="on"
+				debug="on"
+				optimize="off">
+			<compilerarg value="-encoding" />
+			<compilerarg value="ascii" />
+		</javac>
+		<copy file="antsrc/com/exedio/jspm/ant.properties" todir="build/classes/com/exedio/jspm" />
 	</target>
 	
 	<target name="taskdef" depends="compile">
