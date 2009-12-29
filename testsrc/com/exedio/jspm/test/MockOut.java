@@ -24,17 +24,17 @@ final class MockOut
 {
 	final ArrayList<Object> result = new ArrayList<Object>();
 	
-	void appendStatic(final String s)
+	void writeStatic(final String s)
 	{
 		result.add('{' + s + '}');
 	}
 	
-	void appendExpression(final String s)
+	void write(final String s)
 	{
 		result.add('[' + s + ']');
 	}
 
-	void appendExpression(final int i)
+	void write(final int i)
 	{
 		result.add(Integer.valueOf(i));
 	}

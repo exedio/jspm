@@ -37,7 +37,7 @@
 		<jspm method="append">
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Test.jspm" />
 		</jspm>
-		<jspm staticMethod="appendStatic" expressionMethod="appendExpression">
+		<jspm>
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Mock.jspm" />
 		</jspm>
 	</target>
