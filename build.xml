@@ -34,7 +34,7 @@
 	</target>
 	
 	<target name="test.jspm" depends="taskdef">
-		<jspm>
+		<jspm method="append">
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Test.jspm" />
 		</jspm>
 		<jspm staticMethod="appendStatic" expressionMethod="appendExpression">

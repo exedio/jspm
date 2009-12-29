@@ -20,8 +20,8 @@ package com.exedio.jspm;
 
 final class Config
 {
-	private String staticMethod = "append";
-	private String expressionMethod = "append";
+	private String     staticMethod = "writeStatic";
+	private String expressionMethod = "write";
 
 	public void setMethod(final String method)
 	{
