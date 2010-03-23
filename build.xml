@@ -2,8 +2,6 @@
 
 <project name="jspm" default="build" basedir=".">
 
-	<property name="build.file.tag" value="unlabeled" />
-	
 	<target name="compile">
 		<mkdir dir="build/classes" />
 		<javac srcdir="src"
@@ -91,36 +89,6 @@
 		</jar>
 	</target>
 	
-	<target name="dist.tar">
-		<mkdir dir="build" />
-		<echo file="build/build.number" message="${build.tag}" />
-		<tar destfile="build/exedio-jspm-src-${build.file.tag}.tar.gz"
-				compression="gzip">
-			<tarfileset file="${basedir}/build/build.number" />
-			<tarfileset dir="${basedir}">
-				<exclude name="getlib/**" />
-				<exclude name="getlib.xml" />
-				<exclude name="getlib.properties" />
-				<exclude name="log.xml" /><!-- created by cruise -->
-				<exclude name=".eclipse-output/**" />
-				<exclude name="build/**" />
-				<exclude name="cruise/**" />
-				<exclude name="**/*_Jspm.java" />
-			</tarfileset>
-		</tar>
-	</target>
-	
-	<target name="dist.test" depends="dist.tar">
-		<delete dir="build/dist-test" />
-		<mkdir dir="build/dist-test" />
-		<untar src="build/exedio-jspm-src-${build.file.tag}.tar.gz"
-				dest="build/dist-test"
-				compression="gzip" />
-		<ant dir="build/dist-test" target="build" />
-	</target>
-	
-	<target name="dist" depends="dist.tar, dist.test" />
-	
 	<target name="clean">
 		<delete dir="build" />
 		<delete>
@@ -132,13 +100,12 @@
 
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
 	<target name="build" depends="compile, jar, test" />
-	<target name="all" depends="build, dist" />
+	<target name="all" depends="build" />
 
 	<target name="cruise" depends="clean, all">
 		<copy todir="${basedir}/cruise">
 			<fileset file="${basedir}/getlib.properties" />
 			<fileset file="${basedir}/build/exedio-jspm.jar" />
-			<fileset file="${basedir}/build/exedio-jspm-src-${build.file.tag}.tar.gz" />
 		</copy>
 		<copy file="CHANGELOG" tofile="${basedir}/cruise/exedio-jspm.jar-CHANGELOG" />
 	</target>
@@ -146,7 +113,6 @@
 	<target name="hudson" depends="all">
 		<copy todir="${basedir}/build/success">
 			<fileset file="${basedir}/build/exedio-jspm.jar" />
-			<fileset file="${basedir}/build/exedio-jspm-src-${build.file.tag}.tar.gz" />
 		</copy>
 	</target>
 	
