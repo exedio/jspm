@@ -106,6 +106,13 @@
 		<copy todir="${basedir}/build/success">
 			<fileset file="${basedir}/build/exedio-jspm.jar" />
 		</copy>
+		<copy file="ivy.xml" tofile="build/success/ivy.xml" overwrite="true">
+			<filterset>
+				<filter token="BUILD_REVISION" value="${build.revision}" />
+			</filterset>
+		</copy>
+		<copy tofile="${basedir}/build/success/exedio-cops-jspm.txt"
+				file="CHANGELOG" />
 	</target>
 	
 </project>

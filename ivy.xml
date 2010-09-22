@@ -1,0 +1,21 @@
+<ivy-module version="2.0">
+	<info
+			organisation="com.exedio"
+			module="jspm"
+			revision="@BUILD_REVISION@">
+		<license
+				name="GNU Lesser General Public License, Version 2.1"
+				url="http://opensource.org/licenses/lgpl-license.html" />
+	</info>
+	<configurations>
+		<conf name="runtime" />
+		<conf name="build" extends="runtime" visibility="private" />
+	</configurations>
+	<publications>
+		<artifact name="exedio-jspm" />
+		<artifact name="exedio-jspm" type="log" ext="txt" />
+	</publications>
+	<dependencies>
+		<dependency org="junit" name="junit" rev="4.4" conf="build->default" />
+	</dependencies>
+</ivy-module>
