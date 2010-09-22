@@ -111,7 +111,7 @@
 				<filter token="BUILD_REVISION" value="${build.revision}" />
 			</filterset>
 		</copy>
-		<copy tofile="${basedir}/build/success/exedio-cops-jspm.txt"
+		<copy tofile="${basedir}/build/success/exedio-jspm-log.txt"
 				file="CHANGELOG" />
 	</target>
 	
