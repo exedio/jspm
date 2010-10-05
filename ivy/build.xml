@@ -2,6 +2,6 @@
 <project name="ivy" default="copy">
 	<import file="common.xml" />
 	<target name="copy" depends="resolve">
-		<copy file="artifacts/junit-jar.jar" tofile="../lib/junit.jar" overwrite="true" />
+		<copy overwrite="true" file="artifacts/junit-jar.jar" tofile="../lib/junit.jar" />
 	</target>
 </project>
