@@ -102,7 +102,7 @@
 	<target name="build" depends="compile, jar, test" />
 	<target name="all" depends="build" />
 
-	<target name="hudson" depends="all">
+	<target name="jenkins" depends="all">
 		<copy todir="${basedir}/build/success">
 			<fileset file="${basedir}/build/exedio-jspm.jar" />
 			<fileset file="${basedir}/exedio-jspm-log.txt" />
