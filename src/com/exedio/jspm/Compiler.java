@@ -85,8 +85,10 @@ final class Compiler
 
 	void translate(final AtomicInteger count) throws IOException
 	{
-		System.out.println("Translating " + sourceFile);
+		if(config.isVerbose())
+			System.out.println("Translating " + sourceFile);
 		count.incrementAndGet();
+
 		final String prefixStatic     = "out." + config.getMethodStatic()     + "(\"";
 		final String prefixExpression = "out." + config.getMethodExpression() + '(';
 		Reader source = null;

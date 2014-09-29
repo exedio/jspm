@@ -32,7 +32,7 @@
 	</target>
 	
 	<target name="test.jspm" depends="taskdef">
-		<jspm method="append">
+		<jspm method="append" verbose="true">
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Test.jspm" />
 		</jspm>
 		<jspm>

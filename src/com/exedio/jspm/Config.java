@@ -57,4 +57,17 @@ final class Config
 	{
 		return expressionMethod;
 	}
+
+
+	private boolean verbose = false;
+
+	void setVerbose(final boolean verbose)
+	{
+		this.verbose = verbose;
+	}
+
+	boolean isVerbose()
+	{
+		return verbose;
+	}
 }

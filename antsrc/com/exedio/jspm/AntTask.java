@@ -59,6 +59,11 @@ public final class AntTask extends Task
 		config.setExpressionMethod(expressionMethod);
 	}
 
+	public void setVerbose(final boolean verbose)
+	{
+		config.setVerbose(verbose);
+	}
+
 	@Override
 	public void execute() throws BuildException
 	{
