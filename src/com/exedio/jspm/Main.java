@@ -29,7 +29,7 @@ public class Main
 			for(int i = 0; i<args.length; i++)
 				(new Compiler(args[i], new Config())).translateIfDirty();
 		}
-		catch(IOException e)
+		catch(final IOException e)
 		{
 			e.printStackTrace();
 			System.exit(1);
