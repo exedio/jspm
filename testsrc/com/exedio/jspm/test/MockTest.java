@@ -27,7 +27,7 @@ public class MockTest extends TestCase
 	{
 		final MockOut out = new MockOut();
 		Mock_Jspm.writeMock(out);
-		
+
 		final ArrayList<Object> expected = new ArrayList<Object>();
 		expected.add("{1}");
 		expected.add("{12}");

@@ -27,32 +27,32 @@ final class Config
 	{
 		if(method==null)
 			throw new NullPointerException();
-		
+
 		this.    staticMethod = method;
 		this.expressionMethod = method;
 	}
-	
+
 	public void setStaticMethod(final String staticMethod)
 	{
 		if(staticMethod==null)
 			throw new NullPointerException();
-		
+
 		this.staticMethod = staticMethod;
 	}
-	
+
 	public void setExpressionMethod(final String expressionMethod)
 	{
 		if(expressionMethod==null)
 			throw new NullPointerException();
-		
+
 		this.expressionMethod = expressionMethod;
 	}
-	
+
 	String getMethodStatic()
 	{
 		return staticMethod;
 	}
-	
+
 	String getMethodExpression()
 	{
 		return expressionMethod;

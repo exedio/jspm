@@ -35,7 +35,7 @@ public class WriteTest extends TestCase
 		"\t<body>\n" +
 		"\t\thello-zapp\n" +
 		"\t</body>";
-	
+
 	public static final String EXPECTED_CONDITION_POSTFIX =
 		"\n" +
 		"</html>\n" +

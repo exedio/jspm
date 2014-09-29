@@ -23,12 +23,12 @@ import java.util.ArrayList;
 final class MockOut
 {
 	final ArrayList<Object> result = new ArrayList<Object>();
-	
+
 	void writeStatic(final String s)
 	{
 		result.add('{' + s + '}');
 	}
-	
+
 	void write(final String s)
 	{
 		result.add('[' + s + ']');

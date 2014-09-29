@@ -28,7 +28,7 @@ import java.io.Writer;
 final class Compiler
 {
 	private static final String FILE_SUFFIX = ".jspm";
-	
+
 	static enum State
 	{
 		HTML,
@@ -37,7 +37,7 @@ final class Compiler
 		JAVA_FIRST,
 		JAVA_PERCENT;
 	}
-	
+
 	private static final String METHOD_SUFFIX = "\");\n";
 	private static final String METHOD_SUFFIX_EXPRESSION = ");\n";
 	private static final String METHOD_STRING_BREAK = "\" +\n\t\"";
@@ -57,18 +57,18 @@ final class Compiler
 			targetFileName = fileName;
 
 		this.targetFile = new File(targetFileName);
-		
+
 		if(config==null)
 			throw new NullPointerException("config");
 		this.config = config;
 	}
-	
+
 	void translateIfDirty() throws IOException
 	{
 		if(isDirty())
 			translate();
 	}
-	
+
 	boolean isDirty()
 	{
 		final long target = targetFile.lastModified();
@@ -78,10 +78,10 @@ final class Compiler
 		final long source = sourceFile.lastModified();
 		if(source==0l)
 			return true;
-		
+
 		return target<source;
 	}
-	
+
 	void translate() throws IOException
 	{
 		System.out.println("Translating " + sourceFile);
@@ -93,7 +93,7 @@ final class Compiler
 		{
 			source = new FileReader(sourceFile);
 			o = new FileWriter(targetFile);
-			
+
 			State state = State.HTML;
 			char cback = '*';
 			boolean expression = true;
@@ -101,7 +101,7 @@ final class Compiler
 			for(int ci = source.read(); ci>0; ci = source.read())
 			{
 				final char c = (char)ci;
-				
+
 				switch(state)
 				{
 					case HTML:

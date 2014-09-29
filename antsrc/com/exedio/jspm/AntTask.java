@@ -42,17 +42,17 @@ public final class AntTask extends Task
 	{
 		fileLists.add(fileList);
 	}
-	
+
 	public void setMethod(final String method)
 	{
 		config.setMethod(method);
 	}
-	
+
 	public void setStaticMethod(final String staticMethod)
 	{
 		config.setStaticMethod(staticMethod);
 	}
-	
+
 	public void setExpressionMethod(final String expressionMethod)
 	{
 		config.setExpressionMethod(expressionMethod);
