@@ -19,20 +19,25 @@
 package com.exedio.jspm;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main
 {
 	public static final void main(final String[] args)
 	{
+		final AtomicInteger count = new AtomicInteger();
 		try
 		{
 			for(int i = 0; i<args.length; i++)
-				(new Compiler(args[i], new Config())).translateIfDirty();
+				(new Compiler(args[i], new Config())).translateIfDirty(count);
 		}
 		catch(final IOException e)
 		{
 			e.printStackTrace();
 			System.exit(1);
 		}
+
+		if(count.intValue()>0)
+			System.out.println("Translated " + count + " jspm files.");
 	}
 }

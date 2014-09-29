@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 final class Compiler
 {
@@ -63,10 +64,10 @@ final class Compiler
 		this.config = config;
 	}
 
-	void translateIfDirty() throws IOException
+	void translateIfDirty(final AtomicInteger count) throws IOException
 	{
 		if(isDirty())
-			translate();
+			translate(count);
 	}
 
 	boolean isDirty()
@@ -82,9 +83,10 @@ final class Compiler
 		return target<source;
 	}
 
-	void translate() throws IOException
+	void translate(final AtomicInteger count) throws IOException
 	{
 		System.out.println("Translating " + sourceFile);
+		count.incrementAndGet();
 		final String prefixStatic     = "out." + config.getMethodStatic()     + "(\"";
 		final String prefixExpression = "out." + config.getMethodExpression() + '(';
 		Reader source = null;

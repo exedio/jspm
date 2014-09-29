@@ -21,6 +21,7 @@ package com.exedio.jspm;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
@@ -68,15 +69,21 @@ public final class AntTask extends Task
 				final DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
 				final File dir = fileSet.getDir(getProject());
 				final String files[] = directoryScanner.getIncludedFiles();
+				final AtomicInteger count = new AtomicInteger();
 				for(final String file : files)
-					(new Compiler((new File(dir, file)).getAbsolutePath(), config)).translateIfDirty();
+					(new Compiler((new File(dir, file)).getAbsolutePath(), config)).translateIfDirty(count);
+				if(count.intValue()>0)
+					System.out.println("Translated " + count + " jspm files in " + fileSet.getDir());
 			}
 			for(final FileList fileList : fileLists)
 			{
 				final File dir = fileList.getDir(getProject());
 				final String files[] = fileList.getFiles(getProject());
+				final AtomicInteger count = new AtomicInteger();
 				for(final String file : files)
-					(new Compiler((new File(dir, file)).getAbsolutePath(), config)).translateIfDirty();
+					(new Compiler((new File(dir, file)).getAbsolutePath(), config)).translateIfDirty(count);
+				if(count.intValue()>0)
+					System.out.println("Translated " + count + " jspm files");
 			}
 		}
 		catch(final IOException e)
