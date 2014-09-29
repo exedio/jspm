@@ -20,7 +20,6 @@ package com.exedio.jspm.test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
 import junit.framework.TestCase;
 
 public class WriteTest extends TestCase

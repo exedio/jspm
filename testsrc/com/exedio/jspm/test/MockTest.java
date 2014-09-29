@@ -19,7 +19,6 @@
 package com.exedio.jspm.test;
 
 import java.util.ArrayList;
-
 import junit.framework.TestCase;
 
 public class MockTest extends TestCase
