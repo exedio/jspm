@@ -64,6 +64,11 @@ public final class AntTask extends Task
 		config.setVerbose(verbose);
 	}
 
+	public void setAddSourceReferences(final boolean addSourceRefs)
+	{
+		config.setAddSourceReferences(addSourceRefs);
+	}
+
 	@Override
 	public void execute() throws BuildException
 	{

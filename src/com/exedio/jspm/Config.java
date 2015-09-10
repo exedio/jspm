@@ -70,4 +70,17 @@ final class Config
 	{
 		return verbose;
 	}
+
+
+	private boolean addSourceReferences = true;
+
+	void setAddSourceReferences(boolean addSourceRefs)
+	{
+		this.addSourceReferences = addSourceRefs;
+	}
+
+	public boolean isAddSourceReferences()
+	{
+		return addSourceReferences;
+	}
 }
