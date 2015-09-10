@@ -106,6 +106,12 @@ final class Compiler
 			{
 				final char c = (char)ci;
 
+				if (c=='\r')
+				{
+					// ignore \r, so the same files are generated on Linux and Windows
+					continue;
+				}
+
 				switch(state)
 				{
 					case HTML:
@@ -134,8 +140,6 @@ final class Compiler
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write("\\\\");
-								break;
-							case '\r':
 								break;
 							default:
 								if((htmlCharCount++)==0)
