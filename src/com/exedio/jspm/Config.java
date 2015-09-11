@@ -79,7 +79,7 @@ final class Config
 		this.addSourceReferences = addSourceRefs;
 	}
 
-	public boolean isAddSourceReferences()
+	boolean isAddSourceReferences()
 	{
 		return addSourceReferences;
 	}
