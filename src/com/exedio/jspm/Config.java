@@ -74,7 +74,7 @@ final class Config
 
 	private boolean addSourceReferences = true;
 
-	void setAddSourceReferences(boolean addSourceRefs)
+	void setAddSourceReferences(final boolean addSourceRefs)
 	{
 		this.addSourceReferences = addSourceRefs;
 	}

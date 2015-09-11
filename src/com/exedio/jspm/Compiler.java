@@ -63,7 +63,7 @@ final class Compiler
 		this.config = config;
 	}
 
-	private String sourceRef(int sourceLineCount)
+	private String sourceRef(final int sourceLineCount)
 	{
 		if (config.isAddSourceReferences())
 		{
@@ -75,7 +75,7 @@ final class Compiler
 		}
 	}
 
-	private String methodStringBreak(int sourceLineCount)
+	private String methodStringBreak(final int sourceLineCount)
 	{
 		return "\" +"+sourceRef(sourceLineCount)+"\n\t\"";
 	}
