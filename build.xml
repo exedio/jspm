@@ -24,13 +24,13 @@
 		</javac>
 		<copy file="antsrc/com/exedio/jspm/ant.properties" todir="build/classes/com/exedio/jspm" />
 	</target>
-	
+
 	<target name="taskdef" depends="compile">
 		<taskdef
 				resource="com/exedio/jspm/ant.properties"
 				classpath="build/classes" />
 	</target>
-	
+
 	<target name="test.jspm" depends="taskdef">
 		<jspm method="append" verbose="true">
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Test.jspm" />
@@ -39,9 +39,9 @@
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Mock.jspm" />
 		</jspm>
 	</target>
-	
+
 	<target name="jspm" depends="test.jspm" />
-	
+
 	<target name="test.compile" depends="test.jspm">
 		<mkdir dir="build/testclasses" />
 		<javac srcdir="testsrc"
@@ -58,7 +58,7 @@
 			<compilerarg value="ascii" />
 		</javac>
 	</target>
-	
+
 	<target name="test.run" depends="test.compile">
 		<mkdir dir="build/testresults" />
 		<junit fork="yes"
@@ -74,9 +74,9 @@
 			<assertions><enable/></assertions>
 		</junit>
 	</target>
-	
+
 	<target name="test" depends="test.run" />
-	
+
 	<target name="jar" depends="compile">
 		<jar jarfile="build/exedio-jspm.jar" basedir="build/classes" filesonly="true" duplicate="fail" strict="fail" level="9">
 			<manifest>
@@ -89,7 +89,7 @@
 			</manifest>
 		</jar>
 	</target>
-	
+
 	<target name="clean">
 		<delete dir="build" />
 		<delete>
@@ -114,5 +114,5 @@
 			</filterset>
 		</copy>
 	</target>
-	
+
 </project>
