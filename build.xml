@@ -35,7 +35,7 @@
 		<jspm method="append" verbose="true">
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Test.jspm" />
 		</jspm>
-		<jspm>
+		<jspm addSourceReferences="false">
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Mock.jspm" />
 		</jspm>
 	</target>

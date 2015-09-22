@@ -59,6 +59,19 @@ final class Config
 	}
 
 
+	private boolean addSourceReferences = true;
+
+	void setAddSourceReferences(final boolean addSourceRefs)
+	{
+		this.addSourceReferences = addSourceRefs;
+	}
+
+	boolean isAddSourceReferences()
+	{
+		return addSourceReferences;
+	}
+
+
 	private boolean verbose = false;
 
 	void setVerbose(final boolean verbose)

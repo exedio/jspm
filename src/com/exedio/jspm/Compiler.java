@@ -41,7 +41,6 @@ final class Compiler
 
 	private static final String METHOD_SUFFIX = "\");\n";
 	private static final String METHOD_SUFFIX_EXPRESSION = ");\n";
-	private static final String METHOD_STRING_BREAK = "\" +\n\t\"";
 
 	final File sourceFile;
 	final File targetFile;
@@ -62,6 +61,23 @@ final class Compiler
 		if(config==null)
 			throw new NullPointerException("config");
 		this.config = config;
+	}
+
+	private String sourceRef(final int sourceLineCount)
+	{
+		if (config.isAddSourceReferences())
+		{
+			return " // "+sourceFile.getName()+" line "+sourceLineCount;
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+	private String methodStringBreak(final int sourceLineCount)
+	{
+		return "\" +"+sourceRef(sourceLineCount)+"\n\t\"";
 	}
 
 	void translateIfDirty(final AtomicInteger count) throws IOException
@@ -102,9 +118,17 @@ final class Compiler
 			char cback = '*';
 			boolean expression = true;
 			int htmlCharCount = 0;
+			int sourceLineCount = 0;
 			for(int ci = source.read(); ci>0; ci = source.read())
 			{
 				final char c = (char)ci;
+
+				if (c=='\r')
+				{
+					// ignore \r, so the same files are generated on Linux and Windows
+					continue;
+				}
+				if ( c=='\n' ) sourceLineCount++;
 
 				switch(state)
 				{
@@ -128,14 +152,12 @@ final class Compiler
 							case '\n':
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
-								o.write("\\n"+METHOD_STRING_BREAK);
+								o.write("\\n"+methodStringBreak(sourceLineCount));
 								break;
 							case '\\':
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write("\\\\");
-								break;
-							case '\r':
 								break;
 							default:
 								if((htmlCharCount++)==0)
@@ -193,6 +215,9 @@ final class Compiler
 								state = State.JAVA_PERCENT;
 								cback = c;
 								break;
+							case '\n':
+								o.write(sourceRef(sourceLineCount));
+								// fall-through
 							default:
 								o.write(c);
 								break;
