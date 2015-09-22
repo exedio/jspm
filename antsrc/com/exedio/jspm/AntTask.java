@@ -59,14 +59,14 @@ public final class AntTask extends Task
 		config.setExpressionMethod(expressionMethod);
 	}
 
-	public void setVerbose(final boolean verbose)
-	{
-		config.setVerbose(verbose);
-	}
-
 	public void setAddSourceReferences(final boolean addSourceRefs)
 	{
 		config.setAddSourceReferences(addSourceRefs);
+	}
+
+	public void setVerbose(final boolean verbose)
+	{
+		config.setVerbose(verbose);
 	}
 
 	@Override

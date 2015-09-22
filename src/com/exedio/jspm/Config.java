@@ -59,19 +59,6 @@ final class Config
 	}
 
 
-	private boolean verbose = false;
-
-	void setVerbose(final boolean verbose)
-	{
-		this.verbose = verbose;
-	}
-
-	boolean isVerbose()
-	{
-		return verbose;
-	}
-
-
 	private boolean addSourceReferences = true;
 
 	void setAddSourceReferences(final boolean addSourceRefs)
@@ -82,5 +69,18 @@ final class Config
 	boolean isAddSourceReferences()
 	{
 		return addSourceReferences;
+	}
+
+
+	private boolean verbose = false;
+
+	void setVerbose(final boolean verbose)
+	{
+		this.verbose = verbose;
+	}
+
+	boolean isVerbose()
+	{
+		return verbose;
 	}
 }
