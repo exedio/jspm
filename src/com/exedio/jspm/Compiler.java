@@ -63,11 +63,11 @@ final class Compiler
 		this.config = config;
 	}
 
-	private String sourceRef(final int sourceLineCount)
+	private String sourceRef(final int sourceLineCount, final int charsInLineCount)
 	{
 		if (config.isAddSourceReferences())
 		{
-			return " // "+sourceFile.getName()+" line "+sourceLineCount;
+			return fillWithTabs(charsInLineCount)+"// "+sourceFile.getName()+" line "+sourceLineCount;
 		}
 		else
 		{
@@ -75,9 +75,22 @@ final class Compiler
 		}
 	}
 
-	private String methodStringBreak(final int sourceLineCount)
+	private String fillWithTabs(int charsInLineCount)
 	{
-		return "\" +"+sourceRef(sourceLineCount)+"\n\t\"";
+		final int charsPerTab = 3;
+		final int targetLength = 100;
+		final StringBuilder tabs = new StringBuilder();
+		for ( int i=charsInLineCount; i<targetLength; i = ((i/charsPerTab)+1)*charsPerTab )
+		{
+			tabs.append('\t');
+		}
+		tabs.append('\t');
+		return tabs.toString();
+	}
+
+	private String methodStringBreak(final int sourceLineCount, final int charsInLineCount)
+	{
+		return "\" +"+sourceRef(sourceLineCount, charsInLineCount)+"\n\t\"";
 	}
 
 	void translateIfDirty(final AtomicInteger count) throws IOException
@@ -119,9 +132,11 @@ final class Compiler
 			boolean expression = true;
 			int htmlCharCount = 0;
 			int sourceLineCount = 0;
+			int charsInLineCount = 0;
 			for(int ci = source.read(); ci>0; ci = source.read())
 			{
 				final char c = (char)ci;
+				charsInLineCount = updateCharsInLine(c, charsInLineCount);
 
 				if (c=='\r')
 				{
@@ -152,7 +167,8 @@ final class Compiler
 							case '\n':
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
-								o.write("\\n"+methodStringBreak(sourceLineCount));
+								o.write("\\n"+methodStringBreak(sourceLineCount, charsInLineCount));
+								charsInLineCount = 0;
 								break;
 							case '\\':
 								if((htmlCharCount++)==0)
@@ -216,7 +232,8 @@ final class Compiler
 								cback = c;
 								break;
 							case '\n':
-								o.write(sourceRef(sourceLineCount));
+								o.write(sourceRef(sourceLineCount, charsInLineCount));
+								charsInLineCount = 0;
 								// fall-through
 							default:
 								o.write(c);
@@ -251,6 +268,23 @@ final class Compiler
 				source.close();
 			if(o!=null)
 				o.close();
+		}
+	}
+
+	private int updateCharsInLine(final char c, final int oldCharsInLineCount)
+	{
+		if ( c=='\r'||c=='\n' )
+		{
+			/*skip*/
+			return oldCharsInLineCount;
+		}
+		else if ( c=='\t' )
+		{
+			return ((oldCharsInLineCount/3)+1)*3;
+		}
+		else
+		{
+			return oldCharsInLineCount+1;
 		}
 	}
 }
