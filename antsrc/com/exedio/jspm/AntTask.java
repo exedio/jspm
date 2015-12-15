@@ -64,6 +64,16 @@ public final class AntTask extends Task
 		config.setAddSourceReferences(addSourceRefs);
 	}
 
+	public void setCharsPerTab(final int charsPerTab)
+	{
+		config.setCharsPerTab(charsPerTab);
+	}
+
+	public void setSourceReferenceTargetPosition(final int pos)
+	{
+		config.setSourceRefTargetPosition(pos);
+	}
+
 	public void setVerbose(final boolean verbose)
 	{
 		config.setVerbose(verbose);

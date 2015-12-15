@@ -6,8 +6,6 @@ import java.io.Writer;
 
 class SourceRefWriter extends Writer
 {
-	static final int charsPerTab = 3;
-
 	private final Writer nested;
 
 	private int charsInLine = 0;
@@ -36,8 +34,8 @@ class SourceRefWriter extends Writer
 
 	private String fillWithTabs(int charsInLineCount)
 	{
-		final int charsPerTab = 3;
-		final int targetLength = 100;
+		final int charsPerTab = config.getCharsPerTab();
+		final int targetLength = config.getSourceRefTargetPosition();
 		final StringBuilder tabs = new StringBuilder();
 		for ( int i=charsInLineCount; i<targetLength; i = ((i/charsPerTab)+1)*charsPerTab )
 		{
@@ -58,7 +56,7 @@ class SourceRefWriter extends Writer
 				nested.write(sourceRef(sourceLine, charsInLine));
 			}
 			nested.write(c);
-			charsInLine = updateCharsInLine(charsInLine, c);
+			updateCharsInLine(c);
 		}
 	}
 
@@ -74,17 +72,21 @@ class SourceRefWriter extends Writer
 		nested.close();
 	}
 
-	static int updateCharsInLine(final int charsInLine, final char c)
+	void updateCharsInLine(final char c)
 	{
 		switch (c)
 		{
 			case '\n':
 			case '\r':
-				return 0;
+				charsInLine = 0;
+				break;
 			case '\t':
-				return ((charsInLine/charsPerTab)+1)*charsPerTab;
+				final int charsPerTab = config.getCharsPerTab();
+				charsInLine = ((charsInLine/charsPerTab)+1)*charsPerTab;
+				break;
 			default:
-				return charsInLine+1;
+				charsInLine++;
+				break;
 		}
 	}
 

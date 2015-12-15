@@ -72,6 +72,40 @@ final class Config
 	}
 
 
+	private int charsPerTab = 3;
+
+	void setCharsPerTab(int charsPerTab)
+	{
+		if ( charsPerTab<1 )
+		{
+			throw new IllegalArgumentException("charsPerTab must be > 0");
+		}
+		this.charsPerTab = charsPerTab;
+	}
+
+	int getCharsPerTab()
+	{
+		return charsPerTab;
+	}
+
+
+	private int sourceRefTargetPosition = 100;
+
+	void setSourceRefTargetPosition(int sourceRefTargetPosition)
+	{
+		if ( sourceRefTargetPosition<0 )
+		{
+			throw new IllegalArgumentException("sourceRefTargetPosition must >= 0");
+		}
+		this.sourceRefTargetPosition = sourceRefTargetPosition;
+	}
+
+	int getSourceRefTargetPosition()
+	{
+		return sourceRefTargetPosition;
+	}
+
+
 	private boolean verbose = false;
 
 	void setVerbose(final boolean verbose)
