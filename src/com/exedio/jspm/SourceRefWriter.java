@@ -24,7 +24,7 @@ class SourceRefWriter extends Writer
 	{
 		if (config.isAddSourceReferences())
 		{
-			return fillWithTabs(charsInLineCount)+"// "+sourceFile.getName()+" line "+sourceLineCount;
+			return tabsToFill(charsInLineCount)+"// "+sourceFile.getName()+" line "+sourceLineCount;
 		}
 		else
 		{
@@ -32,7 +32,8 @@ class SourceRefWriter extends Writer
 		}
 	}
 
-	private String fillWithTabs(int charsInLineCount)
+	/** get the tab string to fill up a line of length 'charsInLineCount'; always return at least one tab */
+	String tabsToFill(int charsInLineCount)
 	{
 		final int charsPerTab = config.getCharsPerTab();
 		final int targetLength = config.getSourceRefTargetPosition();
@@ -41,7 +42,10 @@ class SourceRefWriter extends Writer
 		{
 			tabs.append('\t');
 		}
-		tabs.append('\t');
+		if ( tabs.length()==0 )
+		{
+			tabs.append('\t');
+		}
 		return tabs.toString();
 	}
 

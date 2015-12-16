@@ -89,7 +89,7 @@ final class Config
 	}
 
 
-	private int sourceRefTargetPosition = 100;
+	private int sourceRefTargetPosition = 90;
 
 	void setSourceRefTargetPosition(int sourceRefTargetPosition)
 	{

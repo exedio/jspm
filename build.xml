@@ -32,7 +32,7 @@
 	</target>
 
 	<target name="test.jspm" depends="taskdef">
-		<jspm method="append" verbose="true">
+		<jspm method="append" verbose="true" sourceReferenceTargetPosition="90">
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Test.jspm" />
 		</jspm>
 		<jspm addSourceReferences="false">
@@ -51,6 +51,7 @@
 				debug="on"
 				optimize="off">
 			<classpath>
+				<pathelement location="build/classes" />
 				<pathelement location="lib/junit.jar" />
 			</classpath>
 			<compilerarg value="-Xlint" />
@@ -67,10 +68,11 @@
 			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />
 			<classpath>
+				<pathelement location="build/classes" />
 				<pathelement location="build/testclasses" />
 				<pathelement location="lib/junit.jar" />
 			</classpath>
-			<test name="com.exedio.jspm.test.PackageTest" todir="build/testresults" outfile="jspm" />
+			<test name="com.exedio.jspm.PackageTest" todir="build/testresults" outfile="jspm" />
 			<assertions><enable/></assertions>
 		</junit>
 	</target>
