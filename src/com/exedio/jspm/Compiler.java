@@ -23,7 +23,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 final class Compiler
@@ -41,6 +40,7 @@ final class Compiler
 
 	private static final String METHOD_SUFFIX = "\");\n";
 	private static final String METHOD_SUFFIX_EXPRESSION = ");\n";
+	private static final String METHOD_STRING_BREAK = "\" +\n\t\"";
 
 	final File sourceFile;
 	final File targetFile;
@@ -61,36 +61,6 @@ final class Compiler
 		if(config==null)
 			throw new NullPointerException("config");
 		this.config = config;
-	}
-
-	private String sourceRef(final int sourceLineCount, final int charsInLineCount)
-	{
-		if (config.isAddSourceReferences())
-		{
-			return fillWithTabs(charsInLineCount)+"// "+sourceFile.getName()+" line "+sourceLineCount;
-		}
-		else
-		{
-			return "";
-		}
-	}
-
-	private String fillWithTabs(int charsInLineCount)
-	{
-		final int charsPerTab = 3;
-		final int targetLength = 100;
-		final StringBuilder tabs = new StringBuilder();
-		for ( int i=charsInLineCount; i<targetLength; i = ((i/charsPerTab)+1)*charsPerTab )
-		{
-			tabs.append('\t');
-		}
-		tabs.append('\t');
-		return tabs.toString();
-	}
-
-	private String methodStringBreak(final int sourceLineCount, final int charsInLineCount)
-	{
-		return "\" +"+sourceRef(sourceLineCount, charsInLineCount)+"\n\t\"";
 	}
 
 	void translateIfDirty(final AtomicInteger count) throws IOException
@@ -121,29 +91,25 @@ final class Compiler
 		final String prefixStatic     = "out." + config.getMethodStatic()     + "(\"";
 		final String prefixExpression = "out." + config.getMethodExpression() + '(';
 		Reader source = null;
-		Writer o = null;
+		SourceRefWriter o = null;
 		try
 		{
 			source = new FileReader(sourceFile);
-			o = new FileWriter(targetFile);
+			o = new SourceRefWriter(new FileWriter(targetFile), sourceFile, config);
 
 			State state = State.HTML;
 			char cback = '*';
 			boolean expression = true;
 			int htmlCharCount = 0;
-			int sourceLineCount = 0;
-			int charsInLineCount = 0;
 			for(int ci = source.read(); ci>0; ci = source.read())
 			{
 				final char c = (char)ci;
-				charsInLineCount = updateCharsInLine(c, charsInLineCount);
 
 				if (c=='\r')
 				{
 					// ignore \r, so the same files are generated on Linux and Windows
 					continue;
 				}
-				if ( c=='\n' ) sourceLineCount++;
 
 				switch(state)
 				{
@@ -167,8 +133,7 @@ final class Compiler
 							case '\n':
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
-								o.write("\\n"+methodStringBreak(sourceLineCount, charsInLineCount));
-								charsInLineCount = 0;
+								o.write("\\n"+METHOD_STRING_BREAK);
 								break;
 							case '\\':
 								if((htmlCharCount++)==0)
@@ -231,10 +196,6 @@ final class Compiler
 								state = State.JAVA_PERCENT;
 								cback = c;
 								break;
-							case '\n':
-								o.write(sourceRef(sourceLineCount, charsInLineCount));
-								charsInLineCount = 0;
-								// fall-through
 							default:
 								o.write(c);
 								break;
@@ -258,6 +219,7 @@ final class Compiler
 					default:
 						throw new RuntimeException(String.valueOf(state));
 				}
+				if ( c=='\n' ) o.incrementSourceLineCount();
 			}
 			if(htmlCharCount>0)
 				o.write(METHOD_SUFFIX);
