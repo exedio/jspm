@@ -12,11 +12,12 @@
 	</info>
 	<configurations>
 		<conf name="runtime" />
+		<conf name="changelog" />
 		<conf name="build" extends="runtime" visibility="private" />
 	</configurations>
 	<publications>
-		<artifact name="exedio-jspm" />
-		<artifact name="exedio-jspm" type="log" ext="txt" />
+		<artifact name="exedio-jspm" conf="runtime"   type="jar" ext="jar" />
+		<artifact name="exedio-jspm" conf="changelog" type="log" ext="txt" />
 	</publications>
 	<dependencies>
 		<dependency org="junit" name="junit" rev="4.4" conf="build->default" />

@@ -7,6 +7,8 @@ omit bug fixes.
 The items are sorted inversely, i.e. lastest items are on top
 
 --------------------------------------------------------------------------
+* added ivy configuration 'changelog'
+  changelog won't be included in 'runtime' config per default anymore
 * right-align references to source .jspm
   (position and tab size can be configured via <jspm sourceReferenceTargetPosition="xy" charsPerTab="z">)
 * when generating .java file, add reference to source .jspm line
