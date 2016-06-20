@@ -12,15 +12,17 @@ public class SourceRefWriterTest extends TestCase
 		final StringWriter sw = new StringWriter();
 		final Config config = new Config();
 		config.setSourceRefTargetPosition(3);
-		final SourceRefWriter sourceRefWriter = new SourceRefWriter(sw, new File("test.src"), config);
-		sourceRefWriter.write("1");
-		assertEquals("1", sw.toString());
+		try(SourceRefWriter sourceRefWriter = new SourceRefWriter(sw, new File("test.src"), config))
+		{
+			sourceRefWriter.write("1");
+			assertEquals("1", sw.toString());
 
-		sourceRefWriter.write("\n");
-		assertEquals("1\t// test.src line 1\n", sw.toString());
+			sourceRefWriter.write("\n");
+			assertEquals("1\t// test.src line 1\n", sw.toString());
+		}
 	}
 
-	public void testTabsToFill()
+	public void testTabsToFill() throws IOException
 	{
 		assertTabsToFill(2, 0, 6);
 		assertTabsToFill(2, 1, 6);
@@ -36,16 +38,18 @@ public class SourceRefWriterTest extends TestCase
 		assertTabsToFill(2, 0, 5);
 	}
 
-	private void assertTabsToFill(final int expectedTabCount, final int charsInLine, final int sourceRefTargetPosition)
+	private void assertTabsToFill(final int expectedTabCount, final int charsInLine, final int sourceRefTargetPosition) throws IOException
 	{
 		final Config config = new Config();
 		config.setSourceRefTargetPosition(sourceRefTargetPosition);
-		final SourceRefWriter sourceRefWriter = new SourceRefWriter(new StringWriter(), new File("test.src"), config);
-		final String tabString = sourceRefWriter.tabsToFill(charsInLine);
-		for (int i = 0; i < tabString.length(); i++)
+		try(SourceRefWriter sourceRefWriter = new SourceRefWriter(new StringWriter(), new File("test.src"), config))
 		{
-			assertEquals('\t', tabString.charAt(i));
+			final String tabString = sourceRefWriter.tabsToFill(charsInLine);
+			for (int i = 0; i < tabString.length(); i++)
+			{
+				assertEquals('\t', tabString.charAt(i));
+			}
+			assertEquals(expectedTabCount, tabString.length());
 		}
-		assertEquals(expectedTabCount, tabString.length());
 	}
 }
