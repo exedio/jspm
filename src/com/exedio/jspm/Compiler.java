@@ -94,13 +94,13 @@ final class Compiler
 		final Charset charset = config.getCharset();
 		final String prefixStatic     = "out." + config.getMethodStatic()     + "(\"";
 		final String prefixExpression = "out." + config.getMethodExpression() + '(';
-		Reader source = null;
-		SourceRefWriter o = null;
-		try
+		try(
+			FileInputStream sourceStream = new FileInputStream(sourceFile);
+			FileOutputStream targetStream = new FileOutputStream(targetFile);
+			Reader source = new InputStreamReader(sourceStream, charset);
+			SourceRefWriter o = new SourceRefWriter(
+					new OutputStreamWriter(targetStream, charset), sourceFile, config))
 		{
-			source = new InputStreamReader(new FileInputStream(sourceFile), charset);
-			o = new SourceRefWriter(new OutputStreamWriter(new FileOutputStream(targetFile), charset), sourceFile, config);
-
 			State state = State.HTML;
 			char cback = '*';
 			boolean expression = true;
@@ -227,13 +227,6 @@ final class Compiler
 			}
 			if(htmlCharCount>0)
 				o.write(METHOD_SUFFIX);
-		}
-		finally
-		{
-			if(source!=null)
-				source.close();
-			if(o!=null)
-				o.close();
 		}
 	}
 }
