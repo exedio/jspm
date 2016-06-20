@@ -39,29 +39,29 @@ final class Config
 	private String     staticMethod = "writeStatic";
 	private String expressionMethod = "write";
 
-	public void setMethod(final String method)
+	public void setMethod(final String value)
 	{
-		if(method==null)
+		if(value==null)
 			throw new NullPointerException();
 
-		this.    staticMethod = method;
-		this.expressionMethod = method;
+		staticMethod = value;
+		expressionMethod = value;
 	}
 
-	public void setStaticMethod(final String staticMethod)
+	public void setStaticMethod(final String value)
 	{
-		if(staticMethod==null)
+		if(value==null)
 			throw new NullPointerException();
 
-		this.staticMethod = staticMethod;
+		staticMethod = value;
 	}
 
-	public void setExpressionMethod(final String expressionMethod)
+	public void setExpressionMethod(final String value)
 	{
-		if(expressionMethod==null)
+		if(value==null)
 			throw new NullPointerException();
 
-		this.expressionMethod = expressionMethod;
+		expressionMethod = value;
 	}
 
 	String getMethodStatic()
@@ -77,9 +77,9 @@ final class Config
 
 	private boolean addSourceReferences = true;
 
-	void setAddSourceReferences(final boolean addSourceRefs)
+	void setAddSourceReferences(final boolean value)
 	{
-		this.addSourceReferences = addSourceRefs;
+		addSourceReferences = value;
 	}
 
 	boolean isAddSourceReferences()
@@ -90,13 +90,13 @@ final class Config
 
 	private int charsPerTab = 3;
 
-	void setCharsPerTab(final int charsPerTab)
+	void setCharsPerTab(final int value)
 	{
-		if ( charsPerTab<1 )
+		if ( value<1 )
 		{
 			throw new IllegalArgumentException("charsPerTab must be > 0");
 		}
-		this.charsPerTab = charsPerTab;
+		charsPerTab = value;
 	}
 
 	int getCharsPerTab()
@@ -107,13 +107,13 @@ final class Config
 
 	private int sourceRefTargetPosition = 90;
 
-	void setSourceRefTargetPosition(final int sourceRefTargetPosition)
+	void setSourceRefTargetPosition(final int value)
 	{
-		if ( sourceRefTargetPosition<0 )
+		if ( value<0 )
 		{
 			throw new IllegalArgumentException("sourceRefTargetPosition must >= 0");
 		}
-		this.sourceRefTargetPosition = sourceRefTargetPosition;
+		sourceRefTargetPosition = value;
 	}
 
 	int getSourceRefTargetPosition()
@@ -124,9 +124,9 @@ final class Config
 
 	private boolean verbose = false;
 
-	void setVerbose(final boolean verbose)
+	void setVerbose(final boolean value)
 	{
-		this.verbose = verbose;
+		verbose = value;
 	}
 
 	boolean isVerbose()

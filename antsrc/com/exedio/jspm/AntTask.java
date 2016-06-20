@@ -49,39 +49,39 @@ public final class AntTask extends Task
 		config.setCharset(value);
 	}
 
-	public void setMethod(final String method)
+	public void setMethod(final String value)
 	{
-		config.setMethod(method);
+		config.setMethod(value);
 	}
 
-	public void setStaticMethod(final String staticMethod)
+	public void setStaticMethod(final String value)
 	{
-		config.setStaticMethod(staticMethod);
+		config.setStaticMethod(value);
 	}
 
-	public void setExpressionMethod(final String expressionMethod)
+	public void setExpressionMethod(final String value)
 	{
-		config.setExpressionMethod(expressionMethod);
+		config.setExpressionMethod(value);
 	}
 
-	public void setAddSourceReferences(final boolean addSourceRefs)
+	public void setAddSourceReferences(final boolean value)
 	{
-		config.setAddSourceReferences(addSourceRefs);
+		config.setAddSourceReferences(value);
 	}
 
-	public void setCharsPerTab(final int charsPerTab)
+	public void setCharsPerTab(final int value)
 	{
-		config.setCharsPerTab(charsPerTab);
+		config.setCharsPerTab(value);
 	}
 
-	public void setSourceReferenceTargetPosition(final int pos)
+	public void setSourceReferenceTargetPosition(final int value)
 	{
-		config.setSourceRefTargetPosition(pos);
+		config.setSourceRefTargetPosition(value);
 	}
 
-	public void setVerbose(final boolean verbose)
+	public void setVerbose(final boolean value)
 	{
-		config.setVerbose(verbose);
+		config.setVerbose(value);
 	}
 
 	@Override
