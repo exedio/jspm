@@ -18,8 +18,24 @@
 
 package com.exedio.jspm;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 final class Config
 {
+	private Charset charset = StandardCharsets.US_ASCII;
+
+	public void setCharset(final String value)
+	{
+		charset = Charset.forName(value);
+	}
+
+	Charset getCharset()
+	{
+		return charset;
+	}
+
+
 	private String     staticMethod = "writeStatic";
 	private String expressionMethod = "write";
 

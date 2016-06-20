@@ -19,10 +19,13 @@
 package com.exedio.jspm;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicInteger;
 
 final class Compiler
@@ -88,14 +91,15 @@ final class Compiler
 			System.out.println("Translating " + sourceFile);
 		count.incrementAndGet();
 
+		final Charset charset = config.getCharset();
 		final String prefixStatic     = "out." + config.getMethodStatic()     + "(\"";
 		final String prefixExpression = "out." + config.getMethodExpression() + '(';
 		Reader source = null;
 		SourceRefWriter o = null;
 		try
 		{
-			source = new FileReader(sourceFile);
-			o = new SourceRefWriter(new FileWriter(targetFile), sourceFile, config);
+			source = new InputStreamReader(new FileInputStream(sourceFile), charset);
+			o = new SourceRefWriter(new OutputStreamWriter(new FileOutputStream(targetFile), charset), sourceFile, config);
 
 			State state = State.HTML;
 			char cback = '*';
