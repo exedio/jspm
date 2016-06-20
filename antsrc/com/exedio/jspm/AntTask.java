@@ -44,6 +44,11 @@ public final class AntTask extends Task
 		fileLists.add(fileList);
 	}
 
+	public void setCharset(final String value)
+	{
+		config.setCharset(value);
+	}
+
 	public void setMethod(final String method)
 	{
 		config.setMethod(method);

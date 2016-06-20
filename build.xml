@@ -41,7 +41,7 @@
 	</target>
 
 	<target name="test.jspm" depends="taskdef">
-		<jspm method="append" verbose="true" sourceReferenceTargetPosition="90">
+		<jspm method="append" verbose="true" charset="us-ascii" sourceReferenceTargetPosition="90">
 			<fileset dir="testsrc" includes="com/exedio/jspm/test/Test.jspm" />
 		</jspm>
 		<jspm addSourceReferences="false">
