@@ -31,7 +31,7 @@ class SourceRefWriter extends Writer
 	private final Config config;
 	private final File sourceFile;
 
-	SourceRefWriter(Writer nested, final File sourceFile, final Config config)
+	SourceRefWriter(final Writer nested, final File sourceFile, final Config config)
 	{
 		this.nested = nested;
 		this.config = config;
@@ -51,7 +51,7 @@ class SourceRefWriter extends Writer
 	}
 
 	/** get the tab string to fill up a line of length 'charsInLineCount'; always return at least one tab */
-	String tabsToFill(int charsInLineCount)
+	String tabsToFill(final int charsInLineCount)
 	{
 		final int charsPerTab = config.getCharsPerTab();
 		final int targetLength = config.getSourceRefTargetPosition();

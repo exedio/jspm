@@ -36,7 +36,7 @@ public class SourceRefWriterTest extends TestCase
 		assertTabsToFill(2, 0, 5);
 	}
 
-	private void assertTabsToFill(int expectedTabCount, int charsInLine, int sourceRefTargetPosition)
+	private void assertTabsToFill(final int expectedTabCount, final int charsInLine, final int sourceRefTargetPosition)
 	{
 		final Config config = new Config();
 		config.setSourceRefTargetPosition(sourceRefTargetPosition);
