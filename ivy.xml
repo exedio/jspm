@@ -21,5 +21,6 @@
 	</publications>
 	<dependencies>
 		<dependency org="junit" name="junit" rev="4.4" conf="build->default" />
+		<dependency org="findbugs-x" name="findbugs" rev="3.0.1" conf="build->default" />
 	</dependencies>
 </ivy-module>
