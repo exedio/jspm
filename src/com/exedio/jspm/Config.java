@@ -74,7 +74,7 @@ final class Config
 
 	private int charsPerTab = 3;
 
-	void setCharsPerTab(int charsPerTab)
+	void setCharsPerTab(final int charsPerTab)
 	{
 		if ( charsPerTab<1 )
 		{
@@ -91,7 +91,7 @@ final class Config
 
 	private int sourceRefTargetPosition = 90;
 
-	void setSourceRefTargetPosition(int sourceRefTargetPosition)
+	void setSourceRefTargetPosition(final int sourceRefTargetPosition)
 	{
 		if ( sourceRefTargetPosition<0 )
 		{
