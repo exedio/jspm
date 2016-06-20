@@ -232,21 +232,4 @@ final class Compiler
 				o.close();
 		}
 	}
-
-	private int updateCharsInLine(final char c, final int oldCharsInLineCount)
-	{
-		if ( c=='\r'||c=='\n' )
-		{
-			/*skip*/
-			return oldCharsInLineCount;
-		}
-		else if ( c=='\t' )
-		{
-			return ((oldCharsInLineCount/3)+1)*3;
-		}
-		else
-		{
-			return oldCharsInLineCount+1;
-		}
-	}
 }
