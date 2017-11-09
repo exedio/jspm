@@ -1,13 +1,16 @@
 package com.exedio.jspm;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class SourceRefWriterTest extends TestCase
+class SourceRefWriterTest
 {
-	public void testWrite() throws IOException
+	@Test
+	void testWrite() throws IOException
 	{
 		final StringWriter sw = new StringWriter();
 		final Config config = new Config();
@@ -22,7 +25,8 @@ public class SourceRefWriterTest extends TestCase
 		}
 	}
 
-	public void testTabsToFill() throws IOException
+	@Test
+	void testTabsToFill() throws IOException
 	{
 		assertTabsToFill(2, 0, 6);
 		assertTabsToFill(2, 1, 6);

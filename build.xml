@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 
-<project name="jspm" default="build" basedir=".">
+<project name="jspm" default="build" basedir="."
+		xmlns:if="ant:if"
+		xmlns:unless="ant:unless">
+
+	<target name="checkAntIfUnless">
+		<property name="antSupportsGenericIfUnless" value="true"/>
+		<fail message="ant 1.9.1 required: https://ant.apache.org/manual/ifunless.html" unless:set="antSupportsGenericIfUnless"/>
+	</target>
 
 	<property file="local.properties" />
 	<property file="project.properties" />
@@ -61,7 +68,10 @@
 				optimize="off">
 			<classpath>
 				<pathelement location="build/classes" />
-				<pathelement location="lib/junit.jar" />
+				<pathelement location="lib/opentest4j.jar" />
+				<pathelement location="lib/apiguardian-api.jar" />
+				<pathelement location="lib/junit-jupiter-api.jar" />
+				<pathelement location="lib/junit-platform-commons.jar" />
 			</classpath>
 			<compilerarg value="-Xlint" />
 			<compilerarg value="-encoding" />
@@ -69,21 +79,30 @@
 		</javac>
 	</target>
 
-	<target name="test.run" depends="test.compile">
+	<target name="test.run" depends="test.compile, checkAntIfUnless">
 		<mkdir dir="build/testresults" />
-		<junit fork="yes"
-				 haltonerror="true" haltonfailure="true"
-				 showoutput="true" printsummary="true">
-			<formatter type="brief" usefile="false" />
-			<formatter type="xml" />
+		<java taskname="junit" fork="yes" dir="${basedir}"
+			failonerror="true"
+			classname="org.junit.platform.console.ConsoleLauncher">
+			<arg line="--details verbose" />
+			<arg line="--disable-ansi-colors" if:set="disable-ansi-colors" />
 			<classpath>
 				<pathelement location="build/classes" />
 				<pathelement location="build/testclasses" />
-				<pathelement location="lib/junit.jar" />
+				<pathelement location="lib/opentest4j.jar" />
+				<pathelement location="lib/junit-jupiter-api.jar" />
+				<pathelement location="lib/junit-jupiter-engine.jar" />
+				<pathelement location="lib/junit-platform-commons.jar" />
+				<pathelement location="lib/junit-platform-engine.jar" />
+				<pathelement location="lib/junit-platform-launcher.jar" />
+				<pathelement location="lib/junit-platform-console.jar" />
 			</classpath>
-			<test name="com.exedio.jspm.PackageTest" todir="build/testresults" outfile="jspm" />
+			<arg line="--scan-class-path build/testclasses" unless:set="test" />
+			<arg line="--select-class ${test}" if:set="test" unless:set="method" />
+			<arg line="--select-method ${test}#${method}" if:set="method" />
+			<arg line="--reports-dir build/testresults" />
 			<assertions><enable/></assertions>
-		</junit>
+		</java>
 	</target>
 
 	<target name="test" depends="test.run" />
@@ -115,7 +134,7 @@
 			<class location="${basedir}/build/classes" />
 			<class location="${basedir}/build/testclasses" />
 			<auxclasspath>
-				<pathelement location="${basedir}/lib/junit.jar" />
+				<pathelement location="${basedir}/lib/junit-jupiter-api.jar" />
 				<pathelement location="${ant.core.lib}" />
 			</auxclasspath>
 		</findbugs>

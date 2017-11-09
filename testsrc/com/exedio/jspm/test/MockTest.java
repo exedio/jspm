@@ -18,12 +18,15 @@
 
 package com.exedio.jspm.test;
 
-import java.util.ArrayList;
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MockTest extends TestCase
+import java.util.ArrayList;
+import org.junit.jupiter.api.Test;
+
+class MockTest
 {
-	public void testMock()
+	@Test
+	void testMock()
 	{
 		final MockOut out = new MockOut();
 		Mock_Jspm.writeMock(out);

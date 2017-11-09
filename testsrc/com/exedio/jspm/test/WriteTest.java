@@ -18,39 +18,42 @@
 
 package com.exedio.jspm.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class WriteTest extends TestCase
+class WriteTest
 {
-	public static final String EXPECTED_CONDITION_PREFIX =
+	private static final String EXPECTED_CONDITION_PREFIX =
 		"<html>\n" +
 		"\t<head>\n" +
 		"\t\t<title>234</title>\n" +
 		"\t</head>";
 
-	public static final String EXPECTED_CONDITION_BODY =
+	private static final String EXPECTED_CONDITION_BODY =
 		"\n" +
 		"\t<body>\n" +
 		"\t\thello-zapp\n" +
 		"\t</body>";
 
-	public static final String EXPECTED_CONDITION_POSTFIX =
+	private static final String EXPECTED_CONDITION_POSTFIX =
 		"\n" +
 		"</html>\n" +
 		"\n";
 
-	public static final String EXPECTED_CONDITION_TRUE =
+	private static final String EXPECTED_CONDITION_TRUE =
 		EXPECTED_CONDITION_PREFIX +
 		EXPECTED_CONDITION_BODY +
 		EXPECTED_CONDITION_POSTFIX;
 
-	public static final String EXPECTED_CONDITION_FALSE =
+	private static final String EXPECTED_CONDITION_FALSE =
 		EXPECTED_CONDITION_PREFIX +
 		EXPECTED_CONDITION_POSTFIX;
 
-	public void testWrite()
+	@Test
+	void testWrite()
 	{
 		{
 			final StringWriter buf = new StringWriter();
