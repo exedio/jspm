@@ -1,6 +1,3 @@
-
-import java.awt.Color
-
 timestamps
 {
 	//noinspection GroovyAssignabilityCheck
