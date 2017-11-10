@@ -31,10 +31,13 @@
 		</javac>
 		<javac srcdir="antsrc"
 				destdir="build/classes"
-				includeAntRuntime="true"
+				includeAntRuntime="false"
 				deprecation="on"
 				debug="on"
 				optimize="off">
+			<classpath>
+				<pathelement location="lib/ant.jar" />
+			</classpath>
 			<compilerarg value="-encoding" />
 			<compilerarg value="ascii" />
 		</javac>
