@@ -1,0 +1,21 @@
+<%
+package com.exedio.jspm.test.examples;
+
+public class Assignment_Jspm
+{
+	static void write(final MockOut out)
+	{
+		final String test="abc";
+		%><tag>
+		<span style="<%=test %>"/>
+// #####################
+		<span style="<%=
+//comment
+		test
+
+		 %>"/>
+		</tag>
+		<%
+	}
+}
+%>
