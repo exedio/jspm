@@ -1,0 +1,13 @@
+<%
+
+package com.exedio.jspm.test.examples;
+
+public class NewlineEOF_Jspm
+{
+	static void write(final MockOut out)
+	{
+		// nothing
+	}
+}
+%>
+

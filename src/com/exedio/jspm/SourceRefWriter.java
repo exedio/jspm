@@ -24,14 +24,14 @@ import java.io.Writer;
 
 class SourceRefWriter extends Writer
 {
-	private final Writer nested;
+	private final BufferingWriter nested;
 
 	private int charsInLine = 0;
 	private int sourceLine = 1;
 	private final Config config;
 	private final File sourceFile;
 
-	SourceRefWriter(final Writer nested, final File sourceFile, final Config config)
+	SourceRefWriter(final BufferingWriter nested, final File sourceFile, final Config config)
 	{
 		this.nested = nested;
 		this.config = config;
@@ -115,5 +115,10 @@ class SourceRefWriter extends Writer
 	void incrementSourceLineCount()
 	{
 		sourceLine++;
+	}
+
+	void flushBuffer() throws IOException
+	{
+		nested.flushBuffer();
 	}
 }

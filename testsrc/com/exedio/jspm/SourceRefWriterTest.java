@@ -15,12 +15,14 @@ class SourceRefWriterTest
 		final StringWriter sw = new StringWriter();
 		final Config config = new Config();
 		config.setSourceRefTargetPosition(3);
-		try(SourceRefWriter sourceRefWriter = new SourceRefWriter(sw, new File("test.src"), config))
+		try(SourceRefWriter sourceRefWriter = new SourceRefWriter(new BufferingWriter(sw), new File("test.src"), config))
 		{
 			sourceRefWriter.write("1");
+			sourceRefWriter.flushBuffer();
 			assertEquals("1", sw.toString());
 
 			sourceRefWriter.write("\n");
+			sourceRefWriter.flushBuffer();
 			assertEquals("1\t// test.src line 1\n", sw.toString());
 		}
 	}
@@ -46,7 +48,7 @@ class SourceRefWriterTest
 	{
 		final Config config = new Config();
 		config.setSourceRefTargetPosition(sourceRefTargetPosition);
-		try(SourceRefWriter sourceRefWriter = new SourceRefWriter(new StringWriter(), new File("test.src"), config))
+		try(SourceRefWriter sourceRefWriter = new SourceRefWriter(new BufferingWriter(new StringWriter()), new File("test.src"), config))
 		{
 			final String tabString = sourceRefWriter.tabsToFill(charsInLine);
 			for (int i = 0; i < tabString.length(); i++)

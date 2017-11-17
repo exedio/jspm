@@ -98,8 +98,7 @@ final class Compiler
 			FileInputStream sourceStream = new FileInputStream(sourceFile);
 			FileOutputStream targetStream = new FileOutputStream(targetFile);
 			Reader source = new InputStreamReader(sourceStream, charset);
-			SourceRefWriter o = new SourceRefWriter(
-					new OutputStreamWriter(targetStream, charset), sourceFile, config))
+			SourceRefWriter o = new SourceRefWriter(new BufferingWriter(new OutputStreamWriter(targetStream, charset)), sourceFile, config))
 		{
 			State state = State.HTML;
 			char cback = '*';
@@ -128,6 +127,7 @@ final class Compiler
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write("\\\"");
+								o.flushBuffer();
 								break;
 							case '\t':
 								if((htmlCharCount++)==0)
@@ -143,11 +143,13 @@ final class Compiler
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write("\\\\");
+								o.flushBuffer();
 								break;
 							default:
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write(c);
+								o.flushBuffer();
 								break;
 						}
 						break;
@@ -165,6 +167,7 @@ final class Compiler
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write(cback);
+								o.flushBuffer();
 								break;
 							default:
 								state = State.HTML;
@@ -172,6 +175,7 @@ final class Compiler
 									o.write(prefixStatic);
 								o.write(cback);
 								o.write(c);
+								o.flushBuffer();
 								break;
 						}
 						break;
@@ -186,10 +190,12 @@ final class Compiler
 								state = State.JAVA;
 								expression = true;
 								o.write(prefixExpression);
+								o.flushBuffer();
 								break;
 							default:
 								state = State.JAVA;
 								o.write(c);
+								o.flushBuffer();
 								break;
 						}
 						break;
@@ -202,6 +208,7 @@ final class Compiler
 								break;
 							default:
 								o.write(c);
+								o.flushBuffer();
 								break;
 						}
 						break;
@@ -218,6 +225,7 @@ final class Compiler
 							state = State.JAVA;
 							o.write(cback);
 							o.write(c);
+							o.flushBuffer();
 						}
 						break;
 					default:
