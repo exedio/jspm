@@ -156,6 +156,10 @@
 	<target name="build" depends="compile, jar, test" />
 	<target name="all" depends="build, findbugs" />
 
+	<target name="publishlocally" depends="jar">
+		<ant dir="ivy" target="publishlocally" />
+	</target>
+
 	<target name="jenkins" depends="all">
 		<copy todir="${basedir}/build/success">
 			<fileset file="${basedir}/build/exedio-jspm.jar" />
