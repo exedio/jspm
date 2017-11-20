@@ -32,21 +32,21 @@ final class Compiler
 {
 	private static final String FILE_SUFFIX = ".jspm";
 
-	static enum State
+	enum State
 	{
 		HTML,
 		HTML_LESS,
 		JAVA,
 		JAVA_FIRST,
-		JAVA_PERCENT;
+		JAVA_PERCENT
 	}
 
 	private static final String METHOD_SUFFIX = "\");\n";
 	private static final String METHOD_SUFFIX_EXPRESSION = ");\n";
 	private static final String METHOD_STRING_BREAK = "\" +\n\t\"";
 
-	final File sourceFile;
-	final File targetFile;
+	private final File sourceFile;
+	private final File targetFile;
 	private final Config config;
 
 	Compiler(final String fileName, final Config config)
@@ -72,20 +72,20 @@ final class Compiler
 			translate(count);
 	}
 
-	boolean isDirty()
+	private boolean isDirty()
 	{
 		final long target = targetFile.lastModified();
-		if(target==0l)
+		if(target == 0L)
 			return true;
 
 		final long source = sourceFile.lastModified();
-		if(source==0l)
+		if(source == 0L)
 			return true;
 
 		return target<source;
 	}
 
-	void translate(final AtomicInteger count) throws IOException
+	private void translate(final AtomicInteger count) throws IOException
 	{
 		if(config.isVerbose())
 			System.out.println("Translating " + sourceFile);

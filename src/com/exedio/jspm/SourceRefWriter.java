@@ -94,7 +94,7 @@ class SourceRefWriter extends Writer
 		nested.close();
 	}
 
-	void updateCharsInLine(final char c)
+	private void updateCharsInLine(final char c)
 	{
 		switch (c)
 		{
