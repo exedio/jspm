@@ -90,7 +90,7 @@
 		<java taskname="junit" fork="yes" dir="${basedir}"
 			failonerror="true"
 			classname="org.junit.platform.console.ConsoleLauncher">
-			<arg line="--details verbose" />
+			<arg line="--details ${test-details}" />
 			<arg line="--disable-ansi-colors" if:set="disable-ansi-colors" />
 			<classpath>
 				<pathelement location="build/classes" />
