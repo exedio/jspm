@@ -9,6 +9,8 @@
 		<fail message="ant 1.9.1 required: https://ant.apache.org/manual/ifunless.html" unless:set="antSupportsGenericIfUnless"/>
 	</target>
 
+	<echo taskname="which ant" message="${ant.version}" />
+	<echo taskname="which java" message="${java.vm.name} ${java.version}" />
 	<property file="local.properties" />
 	<property file="project.properties" />
 
