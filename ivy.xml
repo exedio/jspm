@@ -25,8 +25,5 @@
 		<dependency org="org.junit.platform" name="junit-platform-console" rev="1.0.1" conf="build->default" />
 		<dependency org="org.apiguardian" name="apiguardian-api" rev="1.0.0" conf="build->default" />
 		<dependency org="findbugs-x" name="findbugs" rev="3.0.1" conf="build->default" />
-		<dependency org="org.apache.ant" name="ant" rev="1.9.3" conf="build->default">
-			<exclude name="ant-launcher"/>
-		</dependency>
 	</dependencies>
 </ivy-module>

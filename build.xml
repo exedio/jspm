@@ -38,7 +38,7 @@
 				debug="on"
 				optimize="off">
 			<classpath>
-				<pathelement location="lib/ant.jar" />
+				<pathelement location="ant/lib/ant.jar" />
 			</classpath>
 			<compilerarg value="-encoding" />
 			<compilerarg value="ascii" />

@@ -3,4 +3,4 @@ language: java
 jdk:
   - oraclejdk8
 
-script: "ant clean jenkins"
+script: "ant/bin/ant clean jenkins"
