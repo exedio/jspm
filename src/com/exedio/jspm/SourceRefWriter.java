@@ -42,7 +42,7 @@ class SourceRefWriter extends Writer
 	{
 		if (config.isAddSourceReferences())
 		{
-			return tabsToFill(charsInLineCount)+"// "+sourceFile.getName()+" line "+sourceLineCount;
+			return tabsToFill(charsInLineCount)+"// "+sourceFile.getName()+':'+sourceLineCount;
 		}
 		else
 		{

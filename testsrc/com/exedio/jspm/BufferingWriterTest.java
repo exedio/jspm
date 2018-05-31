@@ -54,7 +54,7 @@ class BufferingWriterTest
 			assertEquals("", sw.toString());
 
 			writer.flushBuffer();
-			assertEquals("line 1\t// test.jspm line 1\nline 2\t// test.jspm line 2\nline 3\t// test.jspm line 3\n", sw.toString());
+			assertEquals("line 1\t// test.jspm:1\nline 2\t// test.jspm:2\nline 3\t// test.jspm:3\n", sw.toString());
 		}
 	}
 

@@ -23,7 +23,7 @@ class SourceRefWriterTest
 
 			sourceRefWriter.write("\n");
 			sourceRefWriter.flushBuffer();
-			assertEquals("1\t// test.src line 1\n", sw.toString());
+			assertEquals("1\t// test.src:1\n", sw.toString());
 		}
 	}
 
