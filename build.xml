@@ -104,7 +104,9 @@
 				<pathelement location="lib/junit-platform-engine.jar" />
 				<pathelement location="lib/junit-platform-launcher.jar" />
 				<pathelement location="lib/junit-platform-console.jar" />
+				<pathelement location="lib/junit-platform-reporting.jar" />
 			</classpath>
+			<arg line="--fail-if-no-tests" />
 			<arg line="--scan-class-path build/testclasses" unless:set="test" />
 			<arg line="--select-class ${test}" if:set="test" unless:set="method" />
 			<arg line="--select-method ${test}#${method}" if:set="method" />
