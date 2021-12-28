@@ -4,7 +4,6 @@
 	<target name="copy" depends="resolve">
 
 		<delete dir="../lib">
-			<include name="*" />
 		</delete>
 		<copy overwrite="true" todir="../lib">
 			<firstmatchmapper>
