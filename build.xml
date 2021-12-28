@@ -172,7 +172,7 @@
 			<fileset file="${basedir}/build/exedio-jspm.jar" />
 			<fileset file="${basedir}/exedio-jspm-log.txt" />
 		</copy>
-		<copy file="ivy.xml" tofile="build/success/ivy.xml" overwrite="true">
+		<copy file="ivy/ivy.xml" todir="build/success" overwrite="true">
 			<filterset>
 				<filter token="BUILD_REVISION" value="${build.revision}" />
 				<filter token="BUILD_STATUS"   value="${build.status}" />
