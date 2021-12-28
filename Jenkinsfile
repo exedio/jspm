@@ -1,111 +1,168 @@
+#!'groovy'
 
-timestamps
+def projectName = env.JOB_NAME.substring(0, env.JOB_NAME.indexOf("/")) // depends on name and location of multibranch pipeline in jenkins
+def jdk = 'openjdk-8'
+def isRelease = env.BRANCH_NAME=="master"
+def dockerNamePrefix = env.JOB_NAME.replace("/", "-").replace(" ", "_") + "-" + env.BUILD_NUMBER
+def dockerDate = new Date().format("yyyyMMdd")
+def ant = 'ant/bin/ant -noinput'
+
+properties([
+		gitLabConnection(env.GITLAB_CONNECTION),
+		buildDiscarder(logRotator(
+				numToKeepStr         : isRelease ? '1000' : '30',
+				artifactNumToKeepStr : isRelease ?  '100' :  '2'
+		))
+])
+
+tryCompleted = false
+try
 {
-	def jdk = 'openjdk-8-deb9'
+	parallel "Main": { // trailing brace suppresses Syntax error in idea
 
-	//noinspection GroovyAssignabilityCheck
-	node(jdk)
-	{
-		try
+		//noinspection GroovyAssignabilityCheck
+		nodeCheckoutAndDelete
 		{
-			abortable
+			scmResult ->
+			def buildTag = makeBuildTag(scmResult)
+
+			def dockerName = dockerNamePrefix + "-Main"
+			def mainImage = docker.build(
+					'exedio-jenkins:' + dockerName + '-' + dockerDate,
+					'--build-arg JDK=' + jdk + ' ' +
+					'--build-arg JENKINS_OWNER=' + env.JENKINS_OWNER + ' ' +
+					'conf/main')
+			mainImage.inside(
+					"--name '" + dockerName + "' " +
+					"--cap-drop all " +
+					"--security-opt no-new-privileges " +
+					"--network none")
 			{
-				echo("Delete working dir before build")
-				deleteDir()
-
-				def scmResult = checkout scm
-				computeGitTree(scmResult)
-
-				env.BUILD_TIMESTAMP = new Date().format("yyyy-MM-dd_HH-mm-ss");
-				env.JAVA_HOME = tool jdk
-				env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
-
-				def isRelease = env.BRANCH_NAME.toString().equals("master");
-
-				properties([
-						buildDiscarder(logRotator(
-								numToKeepStr         : isRelease ? '1000' : '15',
-								artifactNumToKeepStr : isRelease ? '1000' :  '2'
-						))
-				])
-
-				sh 'echo' +
-						' scmResult=' + scmResult +
-						' BUILD_TIMESTAMP -${BUILD_TIMESTAMP}-' +
-						' BRANCH_NAME -${BRANCH_NAME}-' +
-						' BUILD_NUMBER -${BUILD_NUMBER}-' +
-						' BUILD_ID -${BUILD_ID}-' +
-						' isRelease=' + isRelease
-
-				sh "ant/bin/ant clean jenkins" +
+				shSilent ant + " clean jenkins" +
 						' "-Dbuild.revision=${BUILD_NUMBER}"' +
-						' "-Dbuild.tag=git ${BRANCH_NAME} ' + scmResult.GIT_COMMIT + ' ' + scmResult.GIT_TREE + ' jenkins ${BUILD_NUMBER} ${BUILD_TIMESTAMP}"' +
+						' "-Dbuild.tag=' + buildTag + '"' +
 						' -Dbuild.status=' + (isRelease?'release':'integration') +
 						' -Dtest-details=none' +
 						' -Ddisable-ansi-colors=true' +
 						' -Dfindbugs.output=xml'
-
-				recordIssues(
-						failOnError: true,
-						enabledForFailure: true,
-						ignoreFailedBuilds: false,
-						qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
-						tools: [
-							java(),
-							spotBugs(pattern: 'build/findbugs.xml', useRankAsPriority: true),
-						],
-				)
-				archive 'build/success/*'
 			}
-		}
-		catch(Exception e)
-		{
-			//todo handle script returned exit code 143
-			throw e;
-		}
-		finally
-		{
-			// because junit failure aborts ant
+
+			recordIssues(
+					failOnError: true,
+					enabledForFailure: true,
+					ignoreFailedBuilds: false,
+					qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
+					tools: [
+						java(),
+						spotBugs(pattern: 'build/findbugs.xml', useRankAsPriority: true),
+					],
+					skipPublishingChecks: true,
+			)
 			junit(
 					allowEmptyResults: false,
 					testResults: 'build/testresults/**/*.xml',
+					skipPublishingChecks: true
 			)
-			def to = emailextrecipients([
-					[$class: 'CulpritsRecipientProvider'],
-					[$class: 'RequesterRecipientProvider']
-			])
-			//TODO details
-			step([$class: 'Mailer',
-					recipients: to,
-					attachLog: true,
-					notifyEveryUnstableBuild: true])
+			archiveArtifacts fingerprint: true, artifacts: 'build/success/*'
+		}
+	},
+	"Ivy": { // trailing brace suppresses Syntax error in idea
 
-			if('SUCCESS'.equals(currentBuild.result) ||
-				'UNSTABLE'.equals(currentBuild.result))
+		def cache = 'jenkins-build-survivor-' + projectName + "-Ivy"
+		//noinspection GroovyAssignabilityCheck
+		lockNodeCheckoutAndDelete(cache)
+		{
+			def dockerName = dockerNamePrefix + "-Ivy"
+			def mainImage = docker.build(
+					'exedio-jenkins:' + dockerName + '-' + dockerDate,
+					'--build-arg JDK=' + jdk + ' ' +
+					'--build-arg JENKINS_OWNER=' + env.JENKINS_OWNER + ' ' +
+					'conf/main')
+			mainImage.inside(
+					"--name '" + dockerName + "' " +
+					"--cap-drop all " +
+					"--security-opt no-new-privileges " +
+					"--mount type=volume,src=" + cache + ",target=/var/jenkins-build-survivor")
 			{
-				echo("Delete working dir after " + currentBuild.result)
-				deleteDir()
+				shSilent ant +
+					" -buildfile ivy" +
+					" -Divy.user.home=/var/jenkins-build-survivor"
 			}
+			archiveArtifacts 'ivy/artifacts/report/**'
+
+			def gitStatus = sh (script: "git status --porcelain --untracked-files=normal", returnStdout: true).trim()
+			if(gitStatus!='')
+			{
+				echo 'FAILURE because fetching dependencies produces git diff'
+				echo gitStatus
+				currentBuild.result = 'FAILURE'
+			}
+		}
+	}
+	tryCompleted = true
+}
+finally
+{
+	if(!tryCompleted)
+		currentBuild.result = 'FAILURE'
+
+	node('email')
+	{
+		step([$class: 'Mailer',
+				recipients: emailextrecipients([isRelease ? culprits() : developers(), requestor()]),
+				notifyEveryUnstableBuild: true])
+	}
+	updateGitlabCommitStatus state: currentBuild.resultIsBetterOrEqualTo("SUCCESS") ? "success" : "failed" // https://docs.gitlab.com/ee/api/commits.html#post-the-build-status-to-a-commit
+}
+
+def lockNodeCheckoutAndDelete(resource, Closure body)
+{
+	lock(resource)
+	{
+		nodeCheckoutAndDelete(body)
+	}
+}
+
+def nodeCheckoutAndDelete(Closure body)
+{
+	node('GitCloneExedio && docker')
+	{
+		env.JENKINS_OWNER =
+			sh (script: "id --user",  returnStdout: true).trim() + ':' +
+			sh (script: "id --group", returnStdout: true).trim()
+		try
+		{
+			deleteDir()
+			def scmResult = checkout scm
+			updateGitlabCommitStatus state: 'running'
+
+			body.call(scmResult)
+		}
+		finally
+		{
+			deleteDir()
 		}
 	}
 }
 
-def abortable(Closure body)
+def makeBuildTag(scmResult)
+{
+	return 'build ' +
+			env.BRANCH_NAME + ' ' +
+			env.BUILD_NUMBER + ' ' +
+			new Date().format("yyyy-MM-dd") + ' ' +
+			scmResult.GIT_COMMIT + ' ' +
+			sh (script: "git cat-file -p " + scmResult.GIT_COMMIT + " | grep '^tree ' | sed -e 's/^tree //'", returnStdout: true).trim()
+}
+
+def shSilent(script)
 {
 	try
 	{
-		body.call();
+		sh script
 	}
-	catch(hudson.AbortException e)
+	catch(Exception ignored)
 	{
-		if(e.getMessage().contains("exit code 143"))
-			return
-		throw e;
+		currentBuild.result = 'FAILURE'
 	}
-}
-
-def computeGitTree(scmResult)
-{
-	sh "git cat-file -p " + scmResult.GIT_COMMIT + " | grep '^tree ' | sed -e 's/^tree //' > .git/jenkins-head-tree"
-	scmResult.GIT_TREE = readFile('.git/jenkins-head-tree').trim()
 }
