@@ -31,12 +31,13 @@ class MockTest
 		final MockOut out = new MockOut();
 		Mock_Jspm.writeMock(out);
 
-		final ArrayList<Object> expected = new ArrayList<Object>();
+		final ArrayList<Object> expected = new ArrayList<>();
 		expected.add("{1}");
 		expected.add("{12}");
 		expected.add("{123}");
 		expected.add("[zack]");
 		expected.add(Integer.valueOf(55));
+		//noinspection HardcodedLineSeparator
 		expected.add("{hallo\nbello}");
 		expected.add("{border=\"0\"}");
 		expected.add("{tib\ttab}");

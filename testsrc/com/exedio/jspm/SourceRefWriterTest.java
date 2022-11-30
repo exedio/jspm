@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 class SourceRefWriterTest
 {
 	@Test
+	@SuppressWarnings("HardcodedLineSeparator")
 	void testWrite() throws IOException
 	{
 		final StringWriter sw = new StringWriter();
@@ -44,7 +45,7 @@ class SourceRefWriterTest
 		assertTabsToFill(2, 0, 5);
 	}
 
-	private void assertTabsToFill(final int expectedTabCount, final int charsInLine, final int sourceRefTargetPosition) throws IOException
+	private static void assertTabsToFill(final int expectedTabCount, final int charsInLine, final int sourceRefTargetPosition) throws IOException
 	{
 		final Config config = new Config();
 		config.setSourceRefTargetPosition(sourceRefTargetPosition);

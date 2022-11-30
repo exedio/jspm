@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("HardcodedLineSeparator")
 class BufferingWriterTest
 {
 	@Test

@@ -29,49 +29,58 @@ import org.apache.tools.ant.types.FileSet;
 
 public final class AntTask extends Task
 {
-	private final ArrayList<FileSet>  fileSets  = new ArrayList<FileSet>();
+	private final ArrayList<FileSet>  fileSets  = new ArrayList<>();
 	private final Config config = new Config();
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void addFileset(final FileSet fileSet)
 	{
 		fileSets.add(fileSet);
 	}
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void setCharset(final String value)
 	{
 		config.setCharset(value);
 	}
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void setMethod(final String value)
 	{
 		config.setMethod(value);
 	}
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void setStaticMethod(final String value)
 	{
 		config.setStaticMethod(value);
 	}
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void setExpressionMethod(final String value)
 	{
 		config.setExpressionMethod(value);
 	}
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void setAddSourceReferences(final boolean value)
 	{
 		config.setAddSourceReferences(value);
 	}
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void setCharsPerTab(final int value)
 	{
 		config.setCharsPerTab(value);
 	}
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void setSourceReferenceTargetPosition(final int value)
 	{
 		config.setSourceRefTargetPosition(value);
 	}
 
+	@SuppressWarnings("unused") // called by ant via reflection
 	public void setVerbose(final boolean value)
 	{
 		config.setVerbose(value);
@@ -86,7 +95,7 @@ public final class AntTask extends Task
 			{
 				final DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
 				final File dir = fileSet.getDir(getProject());
-				final String files[] = directoryScanner.getIncludedFiles();
+				final String[] files = directoryScanner.getIncludedFiles();
 				final AtomicInteger count = new AtomicInteger();
 				for(final String file : files)
 					(new Compiler((new File(dir, file)).getAbsolutePath(), config)).translateIfDirty(count);
