@@ -2,6 +2,8 @@
 
 def projectName = env.JOB_NAME.substring(0, env.JOB_NAME.indexOf("/")) // depends on name and location of multibranch pipeline in jenkins
 def jdk = 'openjdk-8'
+def idea = '2022.1'
+def ideaSHA256 = '0400e6152fa0173e4e9a514c6398eef8f19150893298658c0b3eb1427e5bcbe5'
 def isRelease = env.BRANCH_NAME=="master"
 def dockerNamePrefix = env.JOB_NAME.replace("/", "-").replace(" ", "_") + "-" + env.BUILD_NUMBER
 def dockerDate = new Date().format("yyyyMMdd")
@@ -67,6 +69,59 @@ try
 			)
 			if(isRelease || env.BRANCH_NAME.contains("archiveSuccessArtifacts"))
 				archiveArtifacts fingerprint: true, artifacts: 'build/success/*'
+		}
+	}
+
+	parallelBranches["Idea"] =
+	{
+		//noinspection GroovyAssignabilityCheck
+		nodeCheckoutAndDelete
+		{
+			recordIssues(
+					failOnError: true,
+					enabledForFailure: true,
+					ignoreFailedBuilds: false,
+					qualityGates: [[threshold: 1, type: 'TOTAL_HIGH', unstable: true]],
+					tools: [
+							taskScanner(
+									excludePattern:
+											'.git/**,lib/**,' +
+											'**/*.jar,**/*.zip,**/*.tgz,**/*.jpg,**/*.gif,**/*.png,**/*.tif,**/*.webp,**/*.pdf,**/*.eot,**/*.ttf,**/*.woff,**/*.woff2,**/keystore', // binary file types
+									highTags: 'FIX' + 'ME', // causes build to become unstable, concatenation prevents matching this line
+									normalTags: 'TODO', // does not cause build to become unstable
+									ignoreCase: true),
+					],
+			)
+
+			def dockerName = dockerNamePrefix + "-Idea"
+			docker.
+				build(
+					'exedio-jenkins:' + dockerName + '-' + dockerDate,
+					'--build-arg JDK=' + jdk + ' ' +
+					'--build-arg IDEA=' + idea + ' ' +
+					'--build-arg IDEA_SHA256=' + ideaSHA256 + ' ' +
+					'conf/idea').
+				inside(
+					"--name '" + dockerName + "' " +
+					"--cap-drop all " +
+					"--security-opt no-new-privileges " +
+					"--network none")
+				{
+					shSilent ant + " src"
+					shSilent "/opt/idea/bin/inspect.sh " + env.WORKSPACE + " 'Project Default' idea-inspection-output"
+				}
+			archiveArtifacts 'idea-inspection-output/**'
+			// replace project dir to prevent UnsupportedOperationException - will not be exposed in artifacts
+			shSilent "find idea-inspection-output -name '*.xml' | xargs --no-run-if-empty sed --in-place -- 's=\\\$PROJECT_DIR\\\$="+env.WORKSPACE+"=g'"
+			recordIssues(
+					failOnError: true,
+					enabledForFailure: true,
+					ignoreFailedBuilds: false,
+					qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
+					tools: [
+						ideaInspection(pattern: 'idea-inspection-output/**'),
+					],
+			)
 		}
 	}
 

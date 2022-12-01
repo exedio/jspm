@@ -1,18 +1,20 @@
 package com.exedio.jspm.test.examples;
 
-import java.util.ArrayList;
-
+// class is just needed for compiler
 final class MockOut
 {
-	final ArrayList<Object> result = new ArrayList<>();
-
 	void writeStatic(final String s)
 	{
-		result.add('{' + s + '}');
+		throw new RuntimeException(s);
 	}
 
 	void write(final String s)
 	{
-		result.add('[' + s + ']');
+		throw new RuntimeException(s);
+	}
+
+	private MockOut()
+	{
+		// prevent instantiation
 	}
 }

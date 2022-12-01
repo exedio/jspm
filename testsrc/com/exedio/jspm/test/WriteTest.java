@@ -26,18 +26,21 @@ import org.junit.jupiter.api.Test;
 
 class WriteTest
 {
+	@SuppressWarnings("HardcodedLineSeparator")
 	private static final String EXPECTED_CONDITION_PREFIX =
 		"<html>\n" +
 		"\t<head>\n" +
 		"\t\t<title>234</title>\n" +
 		"\t</head>";
 
+	@SuppressWarnings("HardcodedLineSeparator")
 	private static final String EXPECTED_CONDITION_BODY =
 		"\n" +
 		"\t<body>\n" +
 		"\t\thello-zapp\n" +
 		"\t</body>";
 
+	@SuppressWarnings("HardcodedLineSeparator")
 	private static final String EXPECTED_CONDITION_POSTFIX =
 		"\n" +
 		"</html>\n" +

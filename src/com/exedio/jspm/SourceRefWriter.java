@@ -68,6 +68,7 @@ class SourceRefWriter extends Writer
 	}
 
 	@Override
+	@SuppressWarnings("HardcodedLineSeparator")
 	public void write(final char[] cbuf, final int off, final int len) throws IOException
 	{
 		for ( int i=off; i<off+len; i++ )
@@ -94,6 +95,7 @@ class SourceRefWriter extends Writer
 		nested.close();
 	}
 
+	@SuppressWarnings("HardcodedLineSeparator")
 	private void updateCharsInLine(final char c)
 	{
 		switch (c)

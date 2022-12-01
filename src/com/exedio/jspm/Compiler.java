@@ -28,6 +28,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings("HardcodedLineSeparator")
 final class Compiler
 {
 	private static final String FILE_SUFFIX = ".jspm";
@@ -200,6 +201,7 @@ final class Compiler
 						}
 						break;
 					case JAVA:
+						//noinspection SwitchStatementWithTooFewBranches
 						switch(c)
 						{
 							case '%':
