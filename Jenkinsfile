@@ -47,8 +47,7 @@ try
 						' "-Dbuild.tag=' + buildTag + '"' +
 						' -Dbuild.status=' + (isRelease?'release':'integration') +
 						' -Dtest-details=none' +
-						' -Ddisable-ansi-colors=true' +
-						' -Dfindbugs.output=xml'
+						' -Ddisable-ansi-colors=true'
 			}
 
 			recordIssues(
@@ -58,7 +57,6 @@ try
 					qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
 					tools: [
 						java(),
-						spotBugs(pattern: 'build/findbugs.xml', useRankAsPriority: true),
 					],
 					skipPublishingChecks: true,
 			)
