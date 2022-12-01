@@ -15,12 +15,6 @@
 	<property file="local.properties" />
 	<property file="project.properties" />
 
-	<import>
-		<fileset dir="macros">
-			<include name="*.xml" />
-		</fileset>
-	</import>
-
 	<target name="compile">
 		<mkdir dir="build/classes" />
 		<javac srcdir="src"
@@ -131,26 +125,6 @@
 		</jar>
 	</target>
 
-	<target name="findbugs" depends="compile, test.compile, findbugs.taskdef">
-		<findbugs
-					home="${basedir}/build/findbugs-home"
-					jvmargs="-Xmx512M"
-					failOnError="true"
-					warningsProperty="findbugs.warnings"
-					output="${findbugs.output}"
-					outputFile="${basedir}/build/findbugs.${findbugs.output}"
-					excludeFilter="conf/findbugs-exclude.xml"
-					effort="max"
-					reportlevel="low">
-			<class location="${basedir}/build/classes" />
-			<class location="${basedir}/build/testclasses" />
-			<auxclasspath>
-				<pathelement location="${basedir}/lib/junit-jupiter-api.jar" />
-				<pathelement location="${ant.core.lib}" />
-			</auxclasspath>
-		</findbugs>
-	</target>
-
 	<target name="clean">
 		<delete dir="build" />
 		<delete>
@@ -162,7 +136,7 @@
 
 	<target name="src" depends="jspm" description="creates all sources, so the IDE does not complain" />
 	<target name="build" depends="compile, jar, test" />
-	<target name="all" depends="build, findbugs" />
+	<target name="all" depends="build" />
 
 	<target name="publishlocally" depends="jar">
 		<ant dir="ivy" target="publishlocally" />
