@@ -100,17 +100,16 @@ class SourceRefWriter extends Writer
 	{
 		switch (c)
 		{
-			case '\n':
-			case '\r':
+			case '\n',
+					'\r' ->
 				charsInLine = 0;
-				break;
-			case '\t':
+
+			case '\t' -> {
 				final int charsPerTab = config.getCharsPerTab();
 				charsInLine = ((charsInLine/charsPerTab)+1)*charsPerTab;
-				break;
-			default:
+			}
+			default ->
 				charsInLine++;
-				break;
 		}
 	}
 

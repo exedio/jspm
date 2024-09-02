@@ -117,104 +117,104 @@ final class Compiler
 
 				switch(state)
 				{
-					case HTML:
+					case HTML -> {
 						switch(c)
 						{
-							case '<':
+							case '<' -> {
 								state = State.HTML_LESS;
 								cback = c;
-								break;
-							case '"':
+							}
+							case '"' -> {
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write("\\\"");
 								o.flushBuffer();
-								break;
-							case '\t':
+							}
+							case '\t' -> {
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write("\\t");
-								break;
-							case '\n':
+							}
+							case '\n' -> {
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write("\\n"+METHOD_STRING_BREAK);
-								break;
-							case '\\':
+							}
+							case '\\' -> {
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write("\\\\");
 								o.flushBuffer();
-								break;
-							default:
+							}
+							default -> {
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write(c);
 								o.flushBuffer();
-								break;
+							}
 						}
-						break;
-					case HTML_LESS:
+					}
+					case HTML_LESS -> {
 						switch(c)
 						{
-							case '%':
+							case '%' -> {
 								state = State.JAVA_FIRST;
 								expression = false;
 								if(htmlCharCount>0)
 									o.write(METHOD_SUFFIX);
 								htmlCharCount = 0;
-								break;
-							case '<':
+							}
+							case '<' -> {
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write(cback);
 								o.flushBuffer();
-								break;
-							default:
+							}
+							default -> {
 								state = State.HTML;
 								if((htmlCharCount++)==0)
 									o.write(prefixStatic);
 								o.write(cback);
 								o.write(c);
 								o.flushBuffer();
-								break;
+							}
 						}
-						break;
-					case JAVA_FIRST:
+					}
+					case JAVA_FIRST -> {
 						switch(c)
 						{
-							case '%':
+							case '%' -> {
 								state = State.JAVA_PERCENT;
 								cback = c;
-								break;
-							case '=':
+							}
+							case '=' -> {
 								state = State.JAVA;
 								expression = true;
 								o.write(prefixExpression);
 								o.flushBuffer();
-								break;
-							default:
+							}
+							default -> {
 								state = State.JAVA;
 								o.write(c);
 								o.flushBuffer();
-								break;
+							}
 						}
-						break;
-					case JAVA:
+					}
+					case JAVA -> {
 						//noinspection SwitchStatementWithTooFewBranches
 						switch(c)
 						{
-							case '%':
+							case '%' -> {
 								state = State.JAVA_PERCENT;
 								cback = c;
-								break;
-							default:
+							}
+							default -> {
 								o.write(c);
 								o.flushBuffer();
-								break;
+							}
 						}
-						break;
-					case JAVA_PERCENT:
+					}
+					case JAVA_PERCENT -> {
 						if(c=='>')
 						{
 							state = State.HTML;
@@ -229,8 +229,8 @@ final class Compiler
 							o.write(c);
 							o.flushBuffer();
 						}
-						break;
-					default:
+					}
+					default ->
 						throw new RuntimeException(String.valueOf(state));
 				}
 				if ( c=='\n' ) o.incrementSourceLineCount();
