@@ -60,7 +60,7 @@ class SourceRefWriter extends Writer
 		{
 			tabs.append('\t');
 		}
-		if ( tabs.length()==0 )
+		if ( tabs.isEmpty() )
 		{
 			tabs.append('\t');
 		}
