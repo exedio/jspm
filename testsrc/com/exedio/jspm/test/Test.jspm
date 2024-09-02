@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 
 class Test_Jspm
 {
+	@SuppressWarnings("TextBlockMigration")
 	static final void writeIt(final PrintWriter out, final boolean flag, final String title)
 	{
 %><html>
