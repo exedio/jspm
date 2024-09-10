@@ -3,6 +3,7 @@ package com.exedio.jspm.test.examples;
 
 public class Closing_Scriptlet_Jspm
 {
+	@SuppressWarnings("TextBlockMigration")
 	static void write(final MockOut out)
 	{
 		// following statement is not allowed
